@@ -5352,6 +5352,7 @@
     />
     <path
       id="AOMORI"
+      @click="$router.push('/prefecture/aomori')"
       :fill="prefectureColor"
       stroke="black"
       stroke-width="1"
@@ -5453,7 +5454,7 @@
 
     <path
       id="HOKKAIDO"
-      @click="onHokkaidoClick"
+      @click="$router.push('/prefecture/hokkaido')"
       :fill="prefectureColor"
       stroke="black"
       stroke-width="1"

@@ -1,6 +1,5 @@
 <template>
   <section>
-    <h1 class="header">Japan Photo Map</h1>
     <JapanMap prefectureColor="#ffffff"  />
   </section>
 </template>
