@@ -1,22 +1,17 @@
 <template>
   <section>
-    <JapanMap prefectureColor="#ffffff"  />
+    <h1 class="heading">北海道</h1>
   </section>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from "nuxt-property-decorator"
 import { State } from "vuex-class"
-import { Person } from "~/types"
-import JapanMap from '~/components/JapanMap.vue'
 
 @Component({
-  components: {
-    JapanMap
-  }
+  components: {}
 })
 export default class extends Vue {
-  @State people!: Person;
 
   async created() {
   }
@@ -24,7 +19,7 @@ export default class extends Vue {
 </script>
 
 <style scoped>
-.header {
+.heading {
   color: white;
 }
 
