@@ -1,5 +1,6 @@
 export default {
   env: {},
+  mode: 'spa',
   head: {
     title: "japan-photo-map",
     meta: [
