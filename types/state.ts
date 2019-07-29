@@ -1,5 +1,9 @@
-import { Person } from "~/types";
+import { Person } from "~/types"
 
-export interface RootState {
-  people: Person[];
+export interface RootState {}
+
+export interface IndexState {
+  loaded: boolean,
+  user: any,
+  loggedIn: boolean
 }
