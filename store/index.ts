@@ -1,26 +1,33 @@
-import { RootState, Person } from "~/types";
-import { MutationTree, ActionTree } from "vuex";
-import localRandomData from "~/static/random-data.json";
+import { IndexState } from "~/types"
+import { MutationTree, ActionTree, GetterTree } from "vuex"
+import firebase from '~/plugins/firebase'
 
-export const state = (): RootState => ({
-  people: []
+// FIXME stateにObjectを代入しようとするとstrict=trueの場合エラーがでるため暫定的にfalseに設定する
+export const strict = false
+
+export const state = (): IndexState => ({
+  loaded: false,
+  loggedIn: false,
+  user: null
 })
 
-export const mutations: MutationTree<RootState> = {
-  setPeople(state: RootState, people: Person[]): void {
-    state.people = people
+export const getters: GetterTree<IndexState, IndexState> = {
+  loggedIn: state => state.loggedIn,
+  user: state => state.user
+}
+
+export const mutations: MutationTree<IndexState> = {
+  setUser(state: IndexState, user: any): void {
+    state.user = user
+    state.loggedIn = true
   }
 }
 
-export const actions: ActionTree<RootState, RootState> = {
-  async nuxtServerInit({ commit }, context) {
-    let people: Person[] = []
-
-    // If you serve the site statically with `nuxt generate`, you can't use HTTP requests for local
-    people = context.isStatic ?
-      localRandomData :
-      await context.app.$axios.$get("./random-data.json")
-
-    commit("setPeople", people.slice(0, 10))
+export const actions: ActionTree<IndexState, IndexState> = {
+  async callAuth():Promise<any> {
+    firebase.auth().signInWithRedirect(new firebase.auth.GoogleAuthProvider())
+  },
+  signOut() {
+    firebase.auth().signOut()
   }
 }
