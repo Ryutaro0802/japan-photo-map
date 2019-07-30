@@ -66,11 +66,13 @@ export default class PrefectureNamePage extends Vue {
     const storageRef = storage.ref("images/").child(this.fileName);
     try {
       await storageRef.put(this.uploadFile);
-      const prefectureRomaName = this.$route.params.prefectureName;
-      const metaData = {
-        prefectureName: prefectureRomaName
+      const prefectureName = this.$route.params.prefectureName;
+      const metadata = {
+        customMetadata: {
+          prefectureName: prefectureName,
+        }
       };
-      await storageRef.updateMetadata(metaData);
+      await storageRef.updateMetadata(metadata);
     } catch (error) {
       console.error(error);
     }
