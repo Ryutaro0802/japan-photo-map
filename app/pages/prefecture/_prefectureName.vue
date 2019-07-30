@@ -19,7 +19,7 @@
 
 <script lang="ts">
 import { Component, Vue } from "nuxt-property-decorator";
-import { State } from "vuex-class";
+import { State, Getter } from "vuex-class";
 import Column from "~/components/column/Column.vue";
 import ColumnItem from "~/components/column/ColumnItem.vue";
 import InputFile from "~/components/button/InputFile.vue";
@@ -35,6 +35,7 @@ const storage = firebase.storage();
   }
 })
 export default class PrefectureNamePage extends Vue {
+  @Getter user!: any;
   private uploadFile: any = null;
   private fileName: string = "";
 
@@ -63,10 +64,11 @@ export default class PrefectureNamePage extends Vue {
   }
 
   async fileSubmit() {
-    const storageRef = storage.ref("images/").child(this.fileName);
+    const prefectureName = this.$route.params.prefectureName;
+    const uid = this.user.uid;
+    const storageRef = storage.ref(`${uid}/images/${prefectureName}/`).child(this.fileName);
     try {
       await storageRef.put(this.uploadFile);
-      const prefectureName = this.$route.params.prefectureName;
       const metadata = {
         customMetadata: {
           prefectureName: prefectureName,
