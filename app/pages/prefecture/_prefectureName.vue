@@ -1,8 +1,11 @@
 <template>
   <section>
     <h2 class="heading">{{ prefectureKanaName }}</h2>
-    <button @click.prevent="photoUpload">Upload</button>
-
+    <form @submit.prevent="fileSubmit">
+      <input type="file" @change="setImage" />
+      <!-- <InputFile @change="fileUpload" /> -->
+      <button>Upload</button>
+    </form>
     <Column>
       <ColumnItem>
         <img src="https://dummyimage.com/200x200/adadad/fff" alt />
@@ -19,14 +22,22 @@ import { Component, Vue } from "nuxt-property-decorator";
 import { State } from "vuex-class";
 import Column from "~/components/column/Column.vue";
 import ColumnItem from "~/components/column/ColumnItem.vue";
+import InputFile from "~/components/button/InputFile.vue";
+import firebase from "~/plugins/firebase";
+
+const storage = firebase.storage();
 
 @Component({
   components: {
     Column,
-    ColumnItem
+    ColumnItem,
+    InputFile
   }
 })
-export default class extends Vue {
+export default class PrefectureNamePage extends Vue {
+  private uploadFile: any = null;
+  private fileName: string = "";
+
   validate({ params }: { params: any }): boolean {
     return /^\w+$/.test(params.prefectureName);
   }
@@ -45,8 +56,24 @@ export default class extends Vue {
     }
   }
 
-  photoUpload() {
-    console.log("upload");
+  setImage(e: any) {
+    const file = e.target.files;
+    this.fileName = file[0].name;
+    this.uploadFile = new Blob(file, { type: "image/jpeg" });
+  }
+
+  async fileSubmit() {
+    const storageRef = storage.ref("images/").child(this.fileName);
+    try {
+      await storageRef.put(this.uploadFile);
+      const prefectureRomaName = this.$route.params.prefectureName;
+      const metaData = {
+        prefectureName: prefectureRomaName
+      };
+      await storageRef.updateMetadata(metaData);
+    } catch (error) {
+      console.error(error);
+    }
   }
 }
 </script>
