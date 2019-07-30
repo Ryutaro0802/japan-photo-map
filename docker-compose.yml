@@ -1,0 +1,15 @@
+version: '3'
+services:
+  app:
+    image: node:10.16
+    container_name: JapanPhotoApp
+    environment:
+      PORT: 3000
+      HOST: 0.0.0.0
+    ports:
+      - "3000:3000"
+    working_dir:
+      /src
+    volumes:
+      - ./app:/src
+    command: [sh, -c, yarn install && yarn dev]
