@@ -12,4 +12,4 @@ services:
       /src
     volumes:
       - ./app:/src
-    command: [sh, -c, yarn install && yarn dev]
+    command: [sh, -c, yarn global add firebase-tools && yarn install && yarn dev]
