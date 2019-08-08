@@ -74,7 +74,9 @@ export default class PrefectureNamePage extends Vue {
           prefectureName: prefectureName,
         }
       };
-      await storageRef.updateMetadata(metadata);
+      await storageRef.updateMetadata(metadata)
+      const url = await storageRef.getDownloadURL()
+      console.log(url)
     } catch (error) {
       console.error(error);
     }

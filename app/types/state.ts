@@ -7,3 +7,7 @@ export interface IndexState {
   user: any,
   loggedIn: boolean
 }
+
+export interface JapanState {
+  japan: any
+}
