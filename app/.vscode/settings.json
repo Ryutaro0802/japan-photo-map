@@ -1,8 +1,10 @@
 {
     "cSpell.words": [
+        "action",
         "aichi",
         "aomori",
         "ehime",
+        "firestore",
         "fukui",
         "fukushima",
         "gunma",
@@ -22,6 +24,7 @@
         "tochigi",
         "tokushima",
         "tottori",
+        "vuexfire",
         "yamaguchi",
         "yamanashi"
     ]

@@ -11,10 +11,13 @@
 
 <script lang="ts">
 import { Component, Vue } from "nuxt-property-decorator";
-import { State, Action, Getter, Mutation } from "vuex-class";
+import { State, Action, Getter, Mutation, namespace } from "vuex-class";
 import { Person } from "~/types";
 import JapanMap from "~/components/JapanMap.vue";
 import auth from "~/plugins/auth";
+import * as japan from "~/store/japan";
+
+const Japan = namespace(japan.name);
 
 @Component({
   components: {
@@ -25,9 +28,11 @@ export default class IndexPage extends Vue {
   @Getter loggedIn!: boolean;
   @Mutation setUser: any;
   @Action callAuth: any;
+  @Japan.Action bindJapanRef: any;
   @Action("signOut") signOut: any;
 
   async created() {
+    this.bindJapanRef()
     let user: any = null;
     if (!this.loggedIn) {
       user = await auth();

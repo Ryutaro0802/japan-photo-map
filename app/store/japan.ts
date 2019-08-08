@@ -1,6 +1,11 @@
 import { JapanState, IndexState } from "~/types"
 import { MutationTree, ActionTree, GetterTree } from "vuex"
 import firebase from '~/plugins/firebase'
+import { vuexfireMutations, firestoreAction } from 'vuexfire'
+
+const db = firebase.firestore()
+
+export const name = 'japan'
 
 export const state = (): JapanState => ({
     japan: {
@@ -197,4 +202,10 @@ export const state = (): JapanState => ({
 
 export const getters: GetterTree<JapanState, IndexState> = {
     japan: state => state.japan
+}
+
+export const actions: ActionTree<JapanState, JapanState> = {
+    bindJapanRef: firestoreAction(context => {
+        return context.bindFirestoreRef('japan', db.collection('japan'))
+    })
 }
