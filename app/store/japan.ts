@@ -1,4 +1,4 @@
-import { JapanState } from "~/types"
+import { JapanState, IndexState } from "~/types"
 import { MutationTree, ActionTree, GetterTree } from "vuex"
 import firebase from '~/plugins/firebase'
 
@@ -195,3 +195,6 @@ export const state = (): JapanState => ({
     }
 })
 
+export const getters: GetterTree<JapanState, IndexState> = {
+    japan: state => state.japan
+}
