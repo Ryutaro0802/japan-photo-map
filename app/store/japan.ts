@@ -1,211 +1,46 @@
-import { JapanState, IndexState } from "~/types"
+import { JapanState, RootState } from "~/types"
 import { MutationTree, ActionTree, GetterTree } from "vuex"
 import firebase from '~/plugins/firebase'
-import { vuexfireMutations, firestoreAction } from 'vuexfire'
+import { firestoreAction, firebaseAction } from 'vuexfire'
 
 const db = firebase.firestore()
 
-export const name = 'japan'
-
 export const state = (): JapanState => ({
-    japan: {
-        hokkaido: {
-            went: false,
-            photos: []
-        },
-        aomori: {
-            went: false,
-            photos: []
-        },
-        iwate: {
-            went: false,
-            photos: []
-        },
-        miyagi: {
-            went: false,
-            photos: []
-        },
-        akita: {
-            went: false,
-            photos: []
-        },
-        yamagata: {
-            went: false,
-            photos: []
-        },
-        fukushima: {
-            went: false,
-            photos: []
-        },
-        ibaraki: {
-            went: false,
-            photos: []
-        },
-        tochigi: {
-            went: false,
-            photos: []
-        },
-        gunma: {
-            went: false,
-            photos: []
-        },
-        saitama: {
-            went: false,
-            photos: []
-        },
-        chiba: {
-            went: false,
-            photos: []
-        },
-        tokyo: {
-            went: false,
-            photos: []
-        },
-        kanagawa: {
-            went: false,
-            photos: []
-        },
-        niigata: {
-            went: false,
-            photos: []
-        },
-        toyama: {
-            went: false,
-            photos: []
-        },
-        ishikawa: {
-            went: false,
-            photos: []
-        },
-        fukui: {
-            went: false,
-            photos: []
-        },
-        yamanashi: {
-            went: false,
-            photos: []
-        },
-        nagano: {
-            went: false,
-            photos: []
-        },
-        gifu: {
-            went: false,
-            photos: []
-        },
-        shizuoka: {
-            went: false,
-            photos: []
-        },
-        aichi: {
-            went: false,
-            photos: []
-        },
-        mie: {
-            went: false,
-            photos: []
-        },
-        shiga: {
-            went: false,
-            photos: []
-        },
-        kyoto: {
-            went: false,
-            photos: []
-        },
-        osaka: {
-            went: false,
-            photos: []
-        },
-        hyogo: {
-            went: false,
-            photos: []
-        },
-        nara: {
-            went: false,
-            photos: []
-        },
-        wakayama: {
-            went: false,
-            photos: []
-        },
-        tottori: {
-            went: false,
-            photos: []
-        },
-        shimane: {
-            went: false,
-            photos: []
-        },
-        okayama: {
-            went: false,
-            photos: []
-        },
-        hiroshima: {
-            went: false,
-            photos: []
-        },
-        yamaguchi: {
-            went: false,
-            photos: []
-        },
-        tokushima: {
-            went: false,
-            photos: []
-        },
-        kagawa: {
-            went: false,
-            photos: []
-        },
-        ehime: {
-            went: false,
-            photos: []
-        },
-        kochi: {
-            went: false,
-            photos: []
-        },
-        fukuoka: {
-            went: false,
-            photos: []
-        },
-        saga: {
-            went: false,
-            photos: []
-        },
-        nagasaki: {
-            went: false,
-            photos: []
-        },
-        kumamoto: {
-            went: false,
-            photos: []
-        },
-        oita: {
-            went: false,
-            photos: []
-        },
-        miyazaki: {
-            went: false,
-            photos: []
-        },
-        kagoshima: {
-            went: false,
-            photos: []
-        },
-        okinawa: {
-            went: false,
-            photos: []
-        }
-    }
+    japan: null
 })
 
-export const getters: GetterTree<JapanState, IndexState> = {
+export const getters: GetterTree<JapanState, RootState> = {
     japan: state => state.japan
 }
 
-export const actions: ActionTree<JapanState, JapanState> = {
+export const mutations: MutationTree<JapanState> = {
+    setTest(state: JapanState, { test }): void {
+        // state.user = user
+    }
+}
+
+export const actions: ActionTree<JapanState, RootState> = {
     bindJapanRef: firestoreAction(context => {
         return context.bindFirestoreRef('japan', db.collection('japan'))
+    }),
+    sendGonePrefecture: firebaseAction((context, { prefectureName }) => {
+        console.log({ prefectureName })
+        const user = context.rootState.user
+        const uid = user.uid
+        return db
+            .collection('japan')
+            .doc(uid)
+            .set({ [prefectureName]: { gone: true } })
+    }),
+    test: firestoreAction(context => {
+        const user = context.rootState.user
+        const uid = user.uid
+        return db
+            .collection('japan')
+            .doc(uid)
+            .set({ aa: 'aa' })
+            .then(() => {
+                console.log('user updated!')
+            })
     })
 }
