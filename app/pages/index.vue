@@ -13,7 +13,7 @@
 <script lang="ts">
 import { Component, Vue } from "nuxt-property-decorator";
 import { State, Action, Getter, Mutation, namespace } from "vuex-class";
-import { Person } from "~/types";
+import { Japan } from "~/types";
 import JapanMap from "~/components/JapanMap.vue";
 import auth from "~/plugins/auth";
 
