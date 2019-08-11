@@ -30,7 +30,7 @@ export const actions: ActionTree<JapanState, RootState> = {
         return db
             .collection('japan')
             .doc(uid)
-            .set({ [prefectureName]: { gone: true } })
+            .update({ [prefectureName]: { gone: true } })
     }),
     test: firestoreAction(context => {
         const user = context.rootState.user
