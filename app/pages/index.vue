@@ -1,8 +1,8 @@
 <template>
   <section>
-    <div v-if="loggedIn">
+    <div v-if="loggedIn && japan">
       <button @click.prevent="test">test</button>
-      <JapanMap prefectureColor="#ffffff" />
+      <JapanMap :japan="japan" />
     </div>
     <div v-else>
       <button type="button" @click="callAuth">login</button>
@@ -13,9 +13,9 @@
 <script lang="ts">
 import { Component, Vue } from "nuxt-property-decorator";
 import { State, Action, Getter, Mutation, namespace } from "vuex-class";
-import { Japan } from "~/types";
-import JapanMap from "~/components/JapanMap.vue";
+import JapanMap from "~/components/map/JapanMap.vue";
 import auth from "~/plugins/auth";
+import { Japan } from "~/types";
 
 @Component({
   components: {
