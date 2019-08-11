@@ -1,6 +1,6 @@
-import { Person } from "~/types"
-
-export interface RootState {}
+export interface RootState {
+  user: any
+}
 
 export interface IndexState {
   loaded: boolean,

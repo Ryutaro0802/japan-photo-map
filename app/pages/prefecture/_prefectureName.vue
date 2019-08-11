@@ -1,6 +1,7 @@
 <template>
   <section>
     <h2 class="heading">{{ prefectureKanaName }}</h2>
+    <button @click.prevent="gonePrefecture">行った</button>
     <form @submit.prevent="fileSubmit">
       <input type="file" @change="setImage" />
       <!-- <InputFile @change="fileUpload" /> -->
@@ -19,7 +20,7 @@
 
 <script lang="ts">
 import { Component, Vue } from "nuxt-property-decorator";
-import { State, Getter } from "vuex-class";
+import { State, Getter, Action, namespace } from "vuex-class";
 import Column from "~/components/column/Column.vue";
 import ColumnItem from "~/components/column/ColumnItem.vue";
 import InputFile from "~/components/button/InputFile.vue";
@@ -35,7 +36,9 @@ const storage = firebase.storage();
   }
 })
 export default class PrefectureNamePage extends Vue {
-  @Getter user!: any;
+  @Getter('user') user: any;
+  @Action('japan/sendGonePrefecture') sendGonePrefecture: any;
+
   private uploadFile: any = null;
   private fileName: string = "";
 
@@ -43,9 +46,12 @@ export default class PrefectureNamePage extends Vue {
     return /^\w+$/.test(params.prefectureName);
   }
 
+  get prefectureRomaName(): string {
+    return this.$route.params.prefectureName;
+  }
+
   get prefectureKanaName(): string {
-    const prefectureRomaName = this.$route.params.prefectureName;
-    switch (prefectureRomaName) {
+    switch (this.prefectureRomaName) {
       case "hokkaido":
         return "北海道";
         break;
@@ -66,20 +72,26 @@ export default class PrefectureNamePage extends Vue {
   async fileSubmit() {
     const prefectureName = this.$route.params.prefectureName;
     const uid = this.user.uid;
-    const storageRef = storage.ref(`${uid}/images/${prefectureName}/`).child(this.fileName);
+    const storageRef = storage
+      .ref(`${uid}/images/${prefectureName}/`)
+      .child(this.fileName);
     try {
       await storageRef.put(this.uploadFile);
       const metadata = {
         customMetadata: {
-          prefectureName: prefectureName,
+          prefectureName: prefectureName
         }
       };
-      await storageRef.updateMetadata(metadata)
-      const url = await storageRef.getDownloadURL()
-      console.log(url)
+      await storageRef.updateMetadata(metadata);
+      const url = await storageRef.getDownloadURL();
+      console.log(url);
     } catch (error) {
       console.error(error);
     }
+  }
+
+  gonePrefecture() {
+    this.sendGonePrefecture({ prefectureName: this.prefectureRomaName });
   }
 }
 </script>
