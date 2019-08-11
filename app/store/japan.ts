@@ -21,7 +21,9 @@ export const mutations: MutationTree<JapanState> = {
 
 export const actions: ActionTree<JapanState, RootState> = {
     bindJapanRef: firestoreAction(context => {
-        return context.bindFirestoreRef('japan', db.collection('japan'))
+        const user = context.rootState.user
+        const uid = user.uid
+        return context.bindFirestoreRef('japan', db.collection('japan').doc(uid))
     }),
     sendGonePrefecture: firebaseAction((context, { prefectureName }) => {
         console.log({ prefectureName })

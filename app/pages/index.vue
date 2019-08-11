@@ -24,7 +24,7 @@ import auth from "~/plugins/auth";
 })
 export default class IndexPage extends Vue {
   @Getter('loggedIn') loggedIn!: boolean;
-  @Getter('japan/japan') japan: any;
+  @Getter('japan/japan') japan!: Japan | null;
   @Mutation('setUser') setUser: any;
   @Action("callAuth") callAuth: any;
   @Action("signOut") signOut: any;
@@ -32,16 +32,12 @@ export default class IndexPage extends Vue {
   @Action('japan/test') test: any;
 
   async created() {
-    this.bindJapanRef();
     let user: any = null;
     if (!this.loggedIn) {
       user = await auth();
       this.setUser({ user });
     }
-  }
-
-  mounted() {
-    // console.log(this.japan)
+    this.bindJapanRef();
   }
 
   updateTest() {
