@@ -28,8 +28,8 @@ export const actions: ActionTree<JapanState, RootState> = {
     }),
     initializeJapan: firebaseAction(context => {
         const uid = context.rootGetters.user.uid
-        japanCollection
-            .doc(uid)
+        const japanCollectionRef = japanCollection.doc(uid)
+        japanCollectionRef
             .get()
             .then(querySnapShot => {
                 const snapShot = Object.assign({}, querySnapShot.data())
@@ -41,19 +41,20 @@ export const actions: ActionTree<JapanState, RootState> = {
                         }
                     }
                 })
-                return japanCollection.doc(uid).update(snapShot)
+                return japanCollectionRef.update(snapShot)
             })
     }),
     sendGonePrefecture: firebaseAction((context, { prefectureName }) => {
         const uid = context.rootGetters.user.uid
-        return japanCollection
-            .doc(uid)
-            .update({ [prefectureName]: { gone: true } })
+        const japanCollectionRef = japanCollection.doc(uid)
+        // const snapShot = japanCollectionRef.collection(prefectureName);
+        // TODO 県の値が全て書き換えられるため修正する
+        return japanCollectionRef.update({ [prefectureName]: { gone: true } })
     }),
     test: firestoreAction(context => {
         const uid = context.rootGetters.user.uid
-        return japanCollection
-            .doc(uid)
+        const japanCollectionRef = japanCollection.doc(uid)
+        return japanCollectionRef
             .set({ aa: 'aa' })
             .then(() => {
                 console.log('user updated!')
