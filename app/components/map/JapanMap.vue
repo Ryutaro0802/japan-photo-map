@@ -32,6 +32,7 @@
       -->
       <Prefecture
         id="okinawa"
+        :gone="japan.okinawa.gone"
         @onPrefectureClick="onPrefectureClick"
         d="M 1052.00,3777.00
            C 1052.00,3777.00 1059.67,3783.00 1059.67,3783.33
@@ -148,6 +149,7 @@
       />
       <Prefecture
         id="nagasaki"
+        :gone="japan.nagasaki.gone"
         @onPrefectureClick="onPrefectureClick"
         d="M 1237.45,2505.27
            C 1237.45,2505.27 1235.64,2506.18 1235.64,2506.18
@@ -568,6 +570,7 @@
       />
       <Prefecture
         id="fukuoka"
+        :gone="japan.fukuoka.gone"
         @onPrefectureClick="onPrefectureClick"
         d="M 1379.50,2552.50
            C 1379.50,2552.50 1395.50,2534.50 1395.50,2534.50
@@ -660,6 +663,7 @@
       />
       <Prefecture
         id="saga"
+        :gone="japan.saga.gone"
         @onPrefectureClick="onPrefectureClick"
         d="M 1295.50,2543.00
            C 1295.50,2543.00 1288.00,2534.00 1288.00,2534.00
@@ -721,6 +725,7 @@
       />
       <Prefecture
         id="kumamoto"
+        :gone="japan.kumamoto.gone"
         @onPrefectureClick="onPrefectureClick"
         d="M 1410.00,2692.50
            C 1410.00,2692.50 1411.00,2687.50 1411.00,2687.50
@@ -875,6 +880,7 @@
       />
       <Prefecture
         id="kagoshima"
+        :gone="japan.kagoshima.gone"
         @onPrefectureClick="onPrefectureClick"
         d="M 1352.00,2824.00
            C 1352.00,2824.00 1356.00,2813.50 1356.00,2813.50
@@ -1179,6 +1185,7 @@
       />
       <Prefecture
         id="miyazaki"
+        :gone="japan.miyazaki.gone"
         @onPrefectureClick="onPrefectureClick"
         d="M 1457.00,2765.00
            C 1457.00,2765.00 1467.50,2758.00 1467.50,2758.00
@@ -1276,6 +1283,7 @@
       />
       <Prefecture
         id="oita"
+        :gone="japan.oita.gone"
         @onPrefectureClick="onPrefectureClick"
         d="M 1463.50,2555.00
            C 1463.50,2555.00 1456.00,2549.50 1456.00,2549.50
@@ -1398,6 +1406,7 @@
       />
       <Prefecture
         id="ehime"
+        :gone="japan.ehime.gone"
         @onPrefectureClick="onPrefectureClick"
         d="M 1798.55,2362.55
            C 1798.55,2362.55 1799.45,2359.64 1799.45,2359.64
@@ -1601,6 +1610,7 @@
       />
       <Prefecture
         id="kochi"
+        :gone="japan.kochi.gone"
         @onPrefectureClick="onPrefectureClick"
         d="M 1904.00,2425.00
            C 1904.00,2425.00 1914.00,2428.00 1914.00,2428.00
@@ -1729,7 +1739,8 @@
              1898.33,2420.33 1904.00,2425.00 1904.00,2425.00 Z"
       />
       <Prefecture
-        id="tokuchima"
+        id="tokushima"
+        :gone="japan.tokushima.gone"
         @onPrefectureClick="onPrefectureClick"
         d="M 2044.76,2350.75
            C 2044.76,2350.75 2046.70,2348.35 2046.70,2348.35
@@ -1820,6 +1831,7 @@
       />
       <Prefecture
         id="kagawa"
+        :gone="japan.kagawa.gone"
         @onPrefectureClick="onPrefectureClick"
         d="M 1894.50,2382.00
            C 1894.50,2382.00 1895.00,2369.50 1895.00,2369.50
@@ -1911,6 +1923,7 @@
       />
       <Prefecture
         id="yamaguchi"
+        :gone="japan.yamaguchi.gone"
         @onPrefectureClick="onPrefectureClick"
         d="M 1666.00,2411.33
            C 1666.00,2411.33 1675.33,2403.00 1675.33,2403.00
@@ -2049,6 +2062,7 @@
       />
       <Prefecture
         id="hiroshima"
+        :gone="japan.hiroshima.gone"
         @onPrefectureClick="onPrefectureClick"
         d="M 1845.00,2201.50
            C 1845.00,2201.50 1845.00,2207.00 1845.00,2207.00
@@ -2261,6 +2275,7 @@
       />
       <Prefecture
         id="okayama"
+        :gone="japan.okayama.gone"
         @onPrefectureClick="onPrefectureClick"
         d="M 1840.50,2187.50
            C 1840.50,2187.50 1841.00,2182.50 1841.00,2182.50
@@ -2359,6 +2374,7 @@
       />
       <Prefecture
         id="tottori"
+        :gone="japan.tottori.gone"
         @onPrefectureClick="onPrefectureClick"
         d="M 1835.73,2097.36
            C 1835.73,2097.36 1834.50,2102.00 1834.50,2102.00
@@ -2436,6 +2452,7 @@
       />
       <Prefecture
         id="shimane"
+        :gone="japan.shimane.gone"
         @onPrefectureClick="onPrefectureClick"
         d="M 1805.00,2187.67
            C 1805.00,2187.67 1804.98,2187.76 1804.98,2187.76
@@ -2627,6 +2644,7 @@
       />
       <Prefecture
         id="hyogo"
+        :gone="japan.hyogo.gone"
         @onPrefectureClick="onPrefectureClick"
         d="M 2020.00,2158.50
            C 2020.00,2158.50 2032.00,2148.00 2032.00,2148.00
@@ -2748,6 +2766,7 @@
       />
       <Prefecture
         id="kyoto"
+        :gone="japan.kyoto.gone"
         @onPrefectureClick="onPrefectureClick"
         d="M 2170.00,2186.00
            C 2170.00,2186.00 2168.00,2179.00 2168.00,2179.00
@@ -2860,6 +2879,7 @@
       />
       <Prefecture
         id="osaka"
+        :gone="japan.osaka.gone"
         @onPrefectureClick="onPrefectureClick"
         d="M 2180.00,2254.00
            C 2180.00,2254.00 2172.50,2238.50 2172.50,2238.50
@@ -2923,6 +2943,7 @@
       />
       <Prefecture
         id="wakayama"
+        :gone="japan.wakayama.gone"
         @onPrefectureClick="onPrefectureClick"
         d="M 2261.50,2459.00
            C 2261.50,2459.00 2262.00,2463.50 2262.00,2463.50
@@ -2998,6 +3019,7 @@
       />
       <Prefecture
         id="nara"
+        :gone="japan.nara.gone"
         @onPrefectureClick="onPrefectureClick"
         d="M 2213.50,2320.00
            C 2213.50,2320.00 2214.00,2317.00 2214.00,2317.00
@@ -3069,6 +3091,7 @@
       />
       <Prefecture
         id="shiga"
+        :gone="japan.shiga.gone"
         @onPrefectureClick="onPrefectureClick"
         d="M 2234.33,2128.00
            C 2234.33,2128.00 2235.33,2123.33 2235.33,2123.33
@@ -3169,6 +3192,7 @@
       />
       <Prefecture
         id="mie"
+        :gone="japan.mie.gone"
         @onPrefectureClick="onPrefectureClick"
         d="M 2335.11,2161.36
            C 2335.11,2161.36 2337.73,2158.18 2337.73,2158.18
@@ -3312,7 +3336,8 @@
            M 2243.47,2422.36"
       />
       <Prefecture
-        id="hukui"
+        id="fukui"
+        :gone="japan.fukui.gone"
         @onPrefectureClick="onPrefectureClick"
         d="M 2183.16,2101.53
            C 2183.16,2101.53 2186.23,2101.81 2186.23,2101.81
@@ -3419,6 +3444,7 @@
       />
       <Prefecture
         id="ishikawa"
+        :gone="japan.ishikawa.gone"
         @onPrefectureClick="onPrefectureClick"
         d="M 2409.53,1790.99
            C 2409.53,1790.99 2417.33,1787.74 2417.33,1787.74
@@ -3525,6 +3551,7 @@
       />
       <Prefecture
         id="toyama"
+        :gone="japan.toyama.gone"
         @onPrefectureClick="onPrefectureClick"
         d="M 2516.49,1931.75
            C 2516.49,1931.75 2524.54,1920.93 2524.54,1920.93
@@ -3583,6 +3610,7 @@
       />
       <Prefecture
         id="gifu"
+        :gone="japan.gifu.gone"
         @onPrefectureClick="onPrefectureClick"
         d="M 2370.44,2167.48
            C 2370.44,2167.48 2369.00,2174.33 2369.00,2174.33
@@ -3681,6 +3709,7 @@
       />
       <Prefecture
         id="aichi"
+        :gone="japan.aichi.gone"
         @onPrefectureClick="onPrefectureClick"
         d="M 2370.54,2166.91
            C 2370.54,2166.91 2371.91,2164.44 2371.63,2164.44
@@ -3787,6 +3816,7 @@
       />
       <Prefecture
         id="nagano"
+        :gone="japan.nagano.gone"
         @onPrefectureClick="onPrefectureClick"
         d="M 2524.54,1920.93
            C 2524.54,1920.93 2523.74,1916.10 2523.74,1916.10
@@ -3902,6 +3932,7 @@
       />
       <Prefecture
         id="shizuoka"
+        :gone="japan.shizuoka.gone"
         @onPrefectureClick="onPrefectureClick"
         d="M 2498.88,2261.96
            C 2498.88,2261.96 2495.44,2250.83 2495.44,2250.83
@@ -4054,6 +4085,7 @@
       />
       <Prefecture
         id="niigata"
+        :gone="japan.niigata.gone"
         @onPrefectureClick="onPrefectureClick"
         d="M 2525.67,1818.33
            C 2525.67,1818.33 2566.33,1805.67 2576.67,1795.00
@@ -4193,6 +4225,7 @@
       />
       <Prefecture
         id="yamanashi"
+        :gone="japan.yamanashi.gone"
         @onPrefectureClick="onPrefectureClick"
         d="M 2606.00,2064.67
            C 2606.00,2064.67 2614.33,2056.67 2614.33,2056.67
@@ -4254,6 +4287,7 @@
       />
       <Prefecture
         id="kanagawa"
+        :gone="japan.kanagawa.gone"
         @onPrefectureClick="onPrefectureClick"
         d="M 2760.50,2075.00
            C 2760.50,2075.00 2768.00,2078.33 2768.00,2078.33
@@ -4326,6 +4360,7 @@
       />
       <Prefecture
         id="tokyo"
+        :gone="japan.tokyo.gone"
         @onPrefectureClick="onPrefectureClick"
         d="M 2729.67,2032.00
            C 2729.67,2032.00 2733.33,2033.33 2733.33,2033.33
@@ -4380,6 +4415,7 @@
       />
       <Prefecture
         id="saitama"
+        :gone="japan.saitama.gone"
         @onPrefectureClick="onPrefectureClick"
         d="M 2692.00,2026.75
            C 2692.00,2026.75 2693.50,2022.75 2693.50,2022.75
@@ -4440,6 +4476,7 @@
       />
       <Prefecture
         id="gunma"
+        :gone="japan.gunma.gone"
         @onPrefectureClick="onPrefectureClick"
         d="M 2789.67,1844.33
            C 2789.67,1844.33 2798.33,1849.33 2798.33,1849.33
@@ -4515,6 +4552,7 @@
       />
       <Prefecture
         id="tochigi"
+        :gone="japan.tochigi.gone"
         @onPrefectureClick="onPrefectureClick"
         d="M 2930.67,1840.67
            C 2930.67,1840.67 2931.67,1847.67 2931.67,1847.67
@@ -4568,6 +4606,7 @@
       />
       <Prefecture
         id="chiba"
+        :gone="japan.chiba.gone"
         @onPrefectureClick="onPrefectureClick"
         d="M 2857.00,1989.67
            C 2857.00,1989.67 2862.00,1998.00 2862.00,1998.00
@@ -4656,6 +4695,7 @@
       />
       <Prefecture
         id="ibaraki"
+        :gone="japan.ibaraki.gone"
         @onPrefectureClick="onPrefectureClick"
         d="M 3016.67,1849.33
            C 3016.67,1849.33 3012.00,1850.00 3012.00,1850.00
@@ -4777,6 +4817,7 @@
       />
       <Prefecture
         id="fukushima"
+        :gone="japan.fukushima.gone"
         @onPrefectureClick="onPrefectureClick"
         d="M 2774.33,1808.33
            C 2774.33,1808.33 2770.67,1797.67 2770.67,1797.67
@@ -4867,6 +4908,7 @@
       />
       <Prefecture
         id="miyagi"
+        :gone="japan.miyagi.gone"
         @onPrefectureClick="onPrefectureClick"
         d="M 3153.00,1456.00
            C 3153.00,1456.00 3146.00,1450.50 3146.00,1450.50
@@ -4964,6 +5006,7 @@
       />
       <Prefecture
         id="yamagata"
+        :gone="japan.yamagata.gone"
         @onPrefectureClick="onPrefectureClick"
         d="M 2819.45,1514.18
            C 2819.45,1514.18 2830.00,1494.36 2830.00,1494.36
@@ -5039,6 +5082,7 @@
       />
       <Prefecture
         id="iwate"
+        :gone="japan.iwate.gone"
         @onPrefectureClick="onPrefectureClick"
         d="M 3200.67,1364.33
            C 3200.33,1364.33 3200.67,1368.33 3200.67,1368.33
@@ -5147,6 +5191,7 @@
       />
       <Prefecture
         id="akita"
+        :gone="japan.akita.gone"
         @onPrefectureClick="onPrefectureClick"
         d="M 2889.03,1217.07
            C 2889.03,1217.07 2881.75,1229.09 2880.05,1230.18
@@ -5260,6 +5305,7 @@
       />
       <Prefecture
         id="aomori"
+        :gone="japan.aomori.gone"
         @onPrefectureClick="onPrefectureClick"
         d="M 2882.33,1140.00
            C 2882.33,1140.00 2881.33,1128.33 2878.00,1122.00
