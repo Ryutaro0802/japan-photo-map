@@ -1,7 +1,6 @@
 <template>
   <section>
     <div v-if="loggedIn && japan">
-      <button @click.prevent="test">test</button>
       <JapanMap :japan="japan" />
     </div>
     <div v-else>
@@ -29,7 +28,6 @@ export default class IndexPage extends Vue {
   @Action("callAuth") callAuth: any;
   @Action("signOut") signOut: any;
   @Action('japan/bindJapanRef') bindJapanRef: any;
-  @Action('japan/test') test: any;
 
   async created() {
     let user: any = null;
@@ -38,10 +36,6 @@ export default class IndexPage extends Vue {
       this.setUser({ user });
     }
     this.bindJapanRef();
-  }
-
-  updateTest() {
-    this.test()
   }
 }
 </script>
