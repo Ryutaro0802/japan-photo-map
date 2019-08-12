@@ -1,4 +1,4 @@
-const prefectureNameTranslator = (name: string): string | undefined => {
+export const prefectureNameTranslator = (name: string): string | undefined => {
     switch (name) {
         case 'hokkaido':
             return '北海道'

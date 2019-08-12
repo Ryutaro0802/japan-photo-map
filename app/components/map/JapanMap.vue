@@ -5358,7 +5358,7 @@
       />
       <Prefecture
         id="hokkaido"
-        :gone="true"
+        :gone="japan.hokkaido.gone"
         @onPrefectureClick="onPrefectureClick"
         d="M 3710.00,548.00
            C 3712.67,557.33 3712.67,572.00 3720.00,580.67
@@ -5548,6 +5548,7 @@
       />
       <Prefecture
         id="tokyo(islands)"
+        @onPrefectureClick="onPrefectureClick"
         d="M 2850.67,2560.33
            C 2850.67,2560.33 2855.00,2559.33 2855.33,2560.00
              2855.67,2560.67 2863.33,2567.67 2863.33,2567.67

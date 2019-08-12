@@ -1,4 +1,5 @@
 export * from './state';
+import './prefectureNameTranslator'
 
 export interface Prefecture {
   gone: boolean,

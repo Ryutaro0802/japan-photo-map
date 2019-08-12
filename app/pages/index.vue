@@ -28,6 +28,7 @@ export default class IndexPage extends Vue {
   @Action("callAuth") callAuth: any;
   @Action("signOut") signOut: any;
   @Action('japan/bindJapanRef') bindJapanRef: any;
+  @Action('japan/initializeJapan') initializeJapan: any;
 
   async created() {
     let user: any = null;
@@ -35,7 +36,8 @@ export default class IndexPage extends Vue {
       user = await auth();
       this.setUser({ user });
     }
-    this.bindJapanRef();
+    await this.bindJapanRef();
+    this.initializeJapan();
   }
 }
 </script>

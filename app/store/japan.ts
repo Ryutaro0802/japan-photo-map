@@ -21,22 +21,21 @@ export const mutations: MutationTree<JapanState> = {
 
 export const actions: ActionTree<JapanState, RootState> = {
     bindJapanRef: firestoreAction(context => {
-        const user = context.rootState.user
-        const uid = user.uid
+        const uid = context.rootGetters.user.uid
         return context.bindFirestoreRef('japan', db.collection('japan').doc(uid))
     }),
+    initializeJapan: firebaseAction(context => {
+        const uid = context.rootGetters.user.uid
+    }),
     sendGonePrefecture: firebaseAction((context, { prefectureName }) => {
-        console.log({ prefectureName })
-        const user = context.rootState.user
-        const uid = user.uid
+        const uid = context.rootGetters.user.uid
         return db
             .collection('japan')
             .doc(uid)
             .update({ [prefectureName]: { gone: true } })
     }),
     test: firestoreAction(context => {
-        const user = context.rootState.user
-        const uid = user.uid
+        const uid = context.rootGetters.user.uid
         return db
             .collection('japan')
             .doc(uid)
