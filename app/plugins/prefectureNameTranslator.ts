@@ -1,4 +1,6 @@
-export default function prefectureNameTranslator(name: string): string {
+import Vue from 'vue'
+
+Vue.prototype.$prefectureNameTranslator = (name: string): string | undefined => {
     switch (name) {
         case 'hokkaido':
             return '北海道'
