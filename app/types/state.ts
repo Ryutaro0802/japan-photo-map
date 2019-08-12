@@ -1,3 +1,5 @@
+import { Japan } from "~/types";
+
 export interface RootState {
   user: any
 }
@@ -9,5 +11,5 @@ export interface IndexState {
 }
 
 export interface JapanState {
-  japan: any
+  japan: Japan | null
 }

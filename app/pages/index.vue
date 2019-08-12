@@ -1,8 +1,7 @@
 <template>
   <section>
-    <div v-if="loggedIn">
-      <button @click.prevent="test">test</button>
-      <JapanMap prefectureColor="#ffffff" />
+    <div v-if="loggedIn && japan">
+      <JapanMap :japan="japan" />
     </div>
     <div v-else>
       <button type="button" @click="callAuth">login</button>
@@ -13,9 +12,9 @@
 <script lang="ts">
 import { Component, Vue } from "nuxt-property-decorator";
 import { State, Action, Getter, Mutation, namespace } from "vuex-class";
-import { Person } from "~/types";
-import JapanMap from "~/components/JapanMap.vue";
+import JapanMap from "~/components/map/JapanMap.vue";
 import auth from "~/plugins/auth";
+import { Japan } from "~/types";
 
 @Component({
   components: {
@@ -24,28 +23,21 @@ import auth from "~/plugins/auth";
 })
 export default class IndexPage extends Vue {
   @Getter('loggedIn') loggedIn!: boolean;
-  @Getter('japan/japan') japan: any;
+  @Getter('japan/japan') japan!: Japan | null;
   @Mutation('setUser') setUser: any;
   @Action("callAuth") callAuth: any;
   @Action("signOut") signOut: any;
   @Action('japan/bindJapanRef') bindJapanRef: any;
-  @Action('japan/test') test: any;
+  @Action('japan/initializeJapan') initializeJapan: any;
 
   async created() {
-    this.bindJapanRef();
     let user: any = null;
     if (!this.loggedIn) {
       user = await auth();
       this.setUser({ user });
     }
-  }
-
-  mounted() {
-    // console.log(this.japan)
-  }
-
-  updateTest() {
-    this.test()
+    await this.bindJapanRef();
+    this.initializeJapan();
   }
 }
 </script>

@@ -14,6 +14,7 @@ export default {
   },
   loading: { color: "#3B8070" },
   css: ["~/assets/css/reset.css", "~/assets/css/foundation.css", "~/assets/css/main.css"],
+  plugins: ['~/plugins/prefectureNameTranslator.ts'],
   build: {},
   modules: [
     "@nuxtjs/axios",

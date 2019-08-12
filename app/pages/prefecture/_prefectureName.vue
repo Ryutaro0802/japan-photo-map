@@ -51,16 +51,7 @@ export default class PrefectureNamePage extends Vue {
   }
 
   get prefectureKanaName(): string {
-    switch (this.prefectureRomaName) {
-      case "hokkaido":
-        return "北海道";
-        break;
-      case "aomori":
-        return "青森県";
-        break;
-      default:
-        return "";
-    }
+    return `${this.$prefectureNameTranslator(this.prefectureRomaName)}県`
   }
 
   setImage(e: any) {
