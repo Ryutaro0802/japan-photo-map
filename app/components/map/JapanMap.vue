@@ -33,7 +33,6 @@
       <Prefecture
         id="OKINAWA"
         fill="#fff"
-        @click="onOkinawaClick"
         d="M 1052.00,3777.00
            C 1052.00,3777.00 1059.67,3783.00 1059.67,3783.33
              1059.67,3783.67 1063.33,3796.67 1063.33,3796.67
@@ -5104,7 +5103,7 @@
              3196.67,1364.00 3201.00,1364.33 3200.67,1364.33 Z"
       />
       <Prefecture
-        id="AKITA"
+        id="akita"
         d="M 2889.03,1217.07
            C 2889.03,1217.07 2881.75,1229.09 2880.05,1230.18
              2880.05,1230.18 2878.59,1244.26 2878.59,1244.26
@@ -5216,7 +5215,7 @@
              2994.33,1450.00 2984.00,1451.00 2984.00,1451.00M 2976.33,1452.67"
       />
       <Prefecture
-        id="AOMORI"
+        id="aomori"
         @click="$router.push('/prefecture/aomori')"
         d="M 2882.33,1140.00
            C 2882.33,1140.00 2881.33,1128.33 2878.00,1122.00
@@ -5314,9 +5313,9 @@
              2882.00,1152.00 2882.33,1140.00 2882.33,1140.00 Z"
       />
       <Prefecture
-        id="HOKKAIDO"
+        id="hokkaido"
         :gone="true"
-        @click="$router.push('/prefecture/hokkaido')"
+        @onPrefectureClick="onPrefectureClick"
         d="M 3710.00,548.00
            C 3712.67,557.33 3712.67,572.00 3720.00,580.67
              3719.33,581.33 3729.33,598.00 3749.33,602.00
@@ -5504,7 +5503,7 @@
              3046.00,185.00 3056.00,181.50 3056.00,181.50 Z"
       />
       <Prefecture
-        id="TOKYO(ISLANDS)"
+        id="tokyo(islands)"
         d="M 2850.67,2560.33
            C 2850.67,2560.33 2855.00,2559.33 2855.33,2560.00
              2855.67,2560.67 2863.33,2567.67 2863.33,2567.67
@@ -5558,15 +5557,8 @@ export default class JapanMap extends Vue {
   @Prop()
   japan!: Japan;
 
-  setPrefectureColor(gone: boolean): string {
-    return gone ? "red" : "white";
-  }
-
-  onOkinawaClick() {
-    console.log("okinawa");
-  }
-  onHokkaidoClick() {
-    console.log("hokkaido");
+  private onPrefectureClick({ prefecture }: any): void {
+    this.$router.push(`/prefecture/${prefecture}`);
   }
 }
 </script>
