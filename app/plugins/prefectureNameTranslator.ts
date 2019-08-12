@@ -1,4 +1,4 @@
-export default function prefectureNameTranslator(name) {
+export default function prefectureNameTranslator(name: string): string {
     switch (name) {
         case 'hokkaido':
             return '北海道'
