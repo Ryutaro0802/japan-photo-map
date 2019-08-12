@@ -1,6 +1,4 @@
-import Vue from 'vue'
-
-Vue.prototype.$prefectureNameTranslator = (name: string): string | undefined => {
+const prefectureNameTranslator = (name: string): string | undefined => {
     switch (name) {
         case 'hokkaido':
             return '北海道'
@@ -97,4 +95,8 @@ Vue.prototype.$prefectureNameTranslator = (name: string): string | undefined => 
         case 'okinawa':
             return '沖縄'
     }
+}
+
+export default(_: any, inject: any) => {
+    inject('prefectureNameTranslator', prefectureNameTranslator)
 }
