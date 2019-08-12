@@ -13,14 +13,12 @@ import { Component, Prop, Vue } from "nuxt-property-decorator";
 
 @Component
 export default class Prefecture extends Vue {
+  private initialColor: string = 'white'
+  private goneColor: string = 'red'
+  private strokeColor: string = 'black'
+
   @Prop()
   id!: string;
-  @Prop()
-  initialColor!: string;
-  @Prop()
-  goneColor!: string;
-  @Prop()
-  strokeColor!: string;
   @Prop()
   gone!: boolean;
   @Prop()
