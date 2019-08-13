@@ -4,7 +4,7 @@
       <nuxt-link to="/">Photo Map</nuxt-link>
     </h1>
     <div v-if="!loaded">
-      loading...
+      <Loader />
     </div>
     <div v-show="loaded">
       <nuxt />
@@ -15,8 +15,13 @@
 <script lang="ts">
 import { Getter } from "vuex-class";
 import { Component, Prop, Vue } from "nuxt-property-decorator";
+import Loader from "~/components/loader/Loader.vue";
 
-@Component
+@Component({
+  components: {
+    Loader
+  }
+})
 export default class Default extends Vue {
   @Getter("loaded") loaded!: boolean;
 }
