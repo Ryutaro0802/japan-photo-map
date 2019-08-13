@@ -33,7 +33,7 @@
       <Prefecture
         v-for="prefecture in prefectures"
         :key="prefecture.name"
-        :id="prefecture"
+        :id="prefecture.name"
         :gone="japan[prefecture.name].gone"
         @onPrefectureClick="onPrefectureClick"
         :d="prefecture.d"
@@ -54,7 +54,6 @@ import prefectures from "~/static/prefectures.json"
   }
 })
 export default class JapanMap extends Vue {
-  private aa: string = "aa"
   private prefectures: any = prefectures
 
   @Prop()
