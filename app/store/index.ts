@@ -14,6 +14,7 @@ export const state = (): IndexState => ({
 
 export const getters: GetterTree<IndexState, IndexState> = {
   loggedIn: state => state.loggedIn,
+  loaded: state => state.loaded,
   user: state => state.user
 }
 
@@ -21,6 +22,9 @@ export const mutations: MutationTree<IndexState> = {
   setUser(state: IndexState, { user }): void {
     state.user = user
     state.loggedIn = true
+  },
+  setLoaded(state: IndexState, { loaded }): void {
+    state.loaded = loaded
   },
   ...vuexfireMutations
 }

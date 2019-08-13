@@ -33,7 +33,7 @@
       <Prefecture
         v-for="prefecture in prefectures"
         :key="prefecture.name"
-        :id="prefecture"
+        :id="prefecture.name"
         :gone="japan[prefecture.name].gone"
         @onPrefectureClick="onPrefectureClick"
         :d="prefecture.d"
