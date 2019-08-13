@@ -34,8 +34,8 @@ export const actions: ActionTree<JapanState, RootState> = {
             .then(querySnapShot => {
                 const snapShot = Object.assign({}, querySnapShot.data())
                 prefectures.forEach(prefecture => {
-                    if (!snapShot[prefecture]) {
-                        snapShot[prefecture] = {
+                    if (!snapShot[prefecture.name]) {
+                        snapShot[prefecture.name] = {
                             gone: false,
                             photoPaths: []
                         }
