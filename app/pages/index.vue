@@ -1,10 +1,7 @@
 <template>
   <section>
-    <div v-if="loggedIn && japan">
+    <div v-if="loggedIn && japan !== null">
       <JapanMap :japan="japan" />
-    </div>
-    <div v-else>
-      <button type="button" @click="callAuth">login</button>
     </div>
   </section>
 </template>
@@ -37,6 +34,7 @@ export default class IndexPage extends Vue {
     if (!this.loggedIn) {
       user = await auth();
       this.setUser({ user });
+      return;
     }
     await this.bindJapanRef();
     await this.initializeJapan();

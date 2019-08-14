@@ -7,23 +7,32 @@
       <Loader />
     </div>
     <div v-show="loaded">
+      <button v-if="loggedIn" type="button" @click="onSignOut">logout</button>
       <nuxt />
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { Getter } from "vuex-class";
+import { Action, Getter } from "vuex-class";
 import { Component, Prop, Vue } from "nuxt-property-decorator";
 import Loader from "~/components/loader/Loader.vue";
 
 @Component({
+  middleware: 'authenticated',
   components: {
     Loader
   }
 })
 export default class Default extends Vue {
   @Getter("loaded") loaded!: boolean;
+  @Getter("loggedIn") loggedIn!: boolean;
+  @Action("signOut") signOut: any;
+
+  private onSignOut () {
+    this.signOut();
+    this.$router.push('/login')
+  }
 }
 </script>
 
