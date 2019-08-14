@@ -8,12 +8,11 @@ export const strict = false
 
 export const state = (): IndexState => ({
   loaded: false,
-  loggedIn: false,
   user: null
 })
 
 export const getters: GetterTree<IndexState, IndexState> = {
-  loggedIn: state => state.loggedIn,
+  loggedIn: state => !!state.user,
   loaded: state => state.loaded,
   user: state => state.user
 }
@@ -21,7 +20,9 @@ export const getters: GetterTree<IndexState, IndexState> = {
 export const mutations: MutationTree<IndexState> = {
   setUser(state: IndexState, { user }): void {
     state.user = user
-    state.loggedIn = true
+  },
+  clearUser(state: IndexState): void {
+    state.user = null
   },
   setLoaded(state: IndexState, { loaded }): void {
     state.loaded = loaded
@@ -35,5 +36,6 @@ export const actions: ActionTree<IndexState, IndexState> = {
   },
   signOut() {
     firebase.auth().signOut()
+    this.commit('clearUser')
   }
 }
