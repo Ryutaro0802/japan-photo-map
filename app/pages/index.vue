@@ -20,9 +20,11 @@ import { Japan } from "~/types";
 })
 export default class IndexPage extends Vue {
   @Getter("loggedIn") loggedIn!: boolean;
+  @Getter("initialized") initialized!: boolean;
   @Getter("japan/japan") japan!: Japan | null;
   @Mutation("setUser") setUser: any;
   @Mutation("setLoaded") setLoaded: any;
+  @Mutation("setInitialized") setInitialized: any;
   @Action("callAuth") callAuth: any;
   @Action("signOut") signOut: any;
   @Action("japan/bindJapanRef") bindJapanRef: any;
@@ -36,8 +38,11 @@ export default class IndexPage extends Vue {
       this.setUser({ user });
       return;
     }
-    await this.bindJapanRef();
-    await this.initializeJapan();
+    if (!this.initialized) {
+      await this.bindJapanRef();
+      await this.initializeJapan();
+      this.setInitialized()
+    }
     this.setLoaded({ loaded: true });
   }
 }

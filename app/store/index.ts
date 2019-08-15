@@ -8,13 +8,15 @@ export const strict = false
 
 export const state = (): IndexState => ({
   loaded: false,
-  user: null
+  user: null,
+  initialized: false
 })
 
 export const getters: GetterTree<IndexState, IndexState> = {
   loggedIn: state => !!state.user,
   loaded: state => state.loaded,
-  user: state => state.user
+  user: state => state.user,
+  initialized: state => state.initialized
 }
 
 export const mutations: MutationTree<IndexState> = {
@@ -26,6 +28,9 @@ export const mutations: MutationTree<IndexState> = {
   },
   setLoaded(state: IndexState, { loaded }): void {
     state.loaded = loaded
+  },
+  setInitialized(state: IndexState): void {
+    state.initialized = true
   },
   ...vuexfireMutations
 }

@@ -6,7 +6,8 @@ export interface RootState {
 
 export interface IndexState {
   loaded: boolean,
-  user: any
+  user: any,
+  initialized: boolean
 }
 
 export interface JapanState {
