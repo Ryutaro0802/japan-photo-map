@@ -8,11 +8,8 @@
       <button>Upload</button>
     </form>
     <Column>
-      <ColumnItem>
-        <img src="https://dummyimage.com/200x200/adadad/fff" alt />
-      </ColumnItem>
-      <ColumnItem>
-        <img src="https://dummyimage.com/200x200/adadad/fff" alt />
+      <ColumnItem v-for="photo in photos" :key="photo.id">
+        <img :src="photo.url" alt />
       </ColumnItem>
     </Column>
   </section>
@@ -60,6 +57,10 @@ export default class PrefectureNamePage extends Vue {
 
   get prefectureKanaName(): string {
     return `${this.$prefectureNameTranslator(this.prefectureRomaName)}県`;
+  }
+
+  get photos(): { id: string; url: string }[] {
+    return this.japan[this.prefectureRomaName].photos;
   }
 
   setImage(e: any) {
