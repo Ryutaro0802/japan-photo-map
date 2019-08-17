@@ -1,5 +1,5 @@
 import { JapanState, RootState } from "~/types"
-import { MutationTree, ActionTree, GetterTree } from "vuex"
+import { ActionTree, GetterTree } from "vuex"
 import firebase from '~/plugins/firebase'
 import { firestoreAction, firebaseAction } from 'vuexfire'
 import prefectures from '~/static/prefectures.json'
@@ -13,12 +13,6 @@ export const state = (): JapanState => ({
 
 export const getters: GetterTree<JapanState, RootState> = {
     japan: state => state.japan
-}
-
-export const mutations: MutationTree<JapanState> = {
-    setTest(state: JapanState, { test }): void {
-        // state.user = user
-    }
 }
 
 export const actions: ActionTree<JapanState, RootState> = {
@@ -44,20 +38,13 @@ export const actions: ActionTree<JapanState, RootState> = {
                 return japanCollectionRef.update(snapShot)
             })
     }),
-    sendGonePrefecture: firebaseAction((context, { prefectureName }) => {
+    sendGonePrefecture: firebaseAction(async (context, { prefectureName }) => {
         const uid = context.rootGetters.user.uid
         const japanCollectionRef = japanCollection.doc(uid)
-        // const snapShot = japanCollectionRef.collection(prefectureName);
-        // TODO 県の値が全て書き換えられるため修正する
-        return japanCollectionRef.update({ [prefectureName]: { gone: true } })
-    }),
-    test: firestoreAction(context => {
-        const uid = context.rootGetters.user.uid
-        const japanCollectionRef = japanCollection.doc(uid)
-        return japanCollectionRef
-            .set({ aa: 'aa' })
-            .then(() => {
-                console.log('user updated!')
-            })
+        const snapShot = await japanCollectionRef.get()
+        const prefecturesSnapShot:any = { ...snapShot.data() }
+        const targetPrefecture = prefecturesSnapShot[prefectureName]
+        targetPrefecture.gone = true
+        return japanCollectionRef.update({ [prefectureName]: targetPrefecture })
     })
 }
