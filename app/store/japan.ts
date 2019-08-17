@@ -6,6 +6,15 @@ import prefectures from '~/static/prefectures.json'
 
 const db = firebase.firestore()
 const japanCollection = db.collection('japan')
+const collectionUtility = async (rootGetters: any) => {
+    const uid = rootGetters.user.uid
+    const japanCollectionRef = japanCollection.doc(uid)
+    const snapShot = await japanCollectionRef.get()
+    return {
+        snapShot: { ...snapShot.data() },
+        ref: japanCollectionRef
+    }
+}
 
 export const state = (): JapanState => ({
     japan: null,
@@ -37,7 +46,7 @@ export const actions: ActionTree<JapanState, RootState> = {
             if (!snapShotCopy[prefecture.name]) {
                 snapShotCopy[prefecture.name] = {
                     gone: false,
-                    photoPaths: []
+                    photos: []
                 }
             }
         })
@@ -52,5 +61,11 @@ export const actions: ActionTree<JapanState, RootState> = {
         const targetPrefecture = snapShotCopy[prefectureName]
         targetPrefecture.gone = true
         return japanCollectionRef.update({ [prefectureName]: targetPrefecture })
+    }),
+    addPhotoPath: firebaseAction(async (context, { photoPath }) => {
+        const uid = context.rootGetters.user.uid
+        const japanCollectionRef = japanCollection.doc(uid)
+        const snapShot = await japanCollectionRef.get()
+        const snapShotCopy: any = { ...snapShot.data() }
     })
 }

@@ -3,7 +3,7 @@ import './prefectureNameTranslator'
 
 export interface Prefecture {
   gone: boolean,
-  photoPaths: string[]
+  photos: string[]
 }
 
 export interface Japan {
