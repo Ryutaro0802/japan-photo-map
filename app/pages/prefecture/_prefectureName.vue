@@ -1,7 +1,7 @@
 <template>
   <section>
     <h2 class="heading">{{ prefectureKanaName }}</h2>
-    <button @click.prevent="gonePrefecture" :disabled="currentPrefectureGoneState">行った</button>
+    <button @click.prevent="gonePrefecture" :disabled="prefectureGoneState">行った</button>
     <form @submit.prevent="fileSubmit">
       <input type="file" @change="setImage" />
       <!-- <InputFile @change="fileUpload" /> -->
@@ -51,7 +51,7 @@ export default class PrefectureNamePage extends Vue {
     return this.$route.params.prefectureName;
   }
 
-  get currentPrefectureGoneState(): boolean {
+  get prefectureGoneState(): boolean {
     return this.japan[this.prefectureRomaName].gone
   }
 
