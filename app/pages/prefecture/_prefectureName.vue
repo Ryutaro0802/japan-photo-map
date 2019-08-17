@@ -1,7 +1,7 @@
 <template>
   <section>
     <h2 class="heading">{{ prefectureKanaName }}</h2>
-    <button @click.prevent="gonePrefecture">行った</button>
+    <button @click.prevent="gonePrefecture" :disabled="currentPrefectureGoneState">行った</button>
     <form @submit.prevent="fileSubmit">
       <input type="file" @change="setImage" />
       <!-- <InputFile @change="fileUpload" /> -->
@@ -37,6 +37,7 @@ const storage = firebase.storage();
 })
 export default class PrefectureNamePage extends Vue {
   @Getter('user') user: any;
+  @Getter('japan/japan') japan: any;
   @Action('japan/sendGonePrefecture') sendGonePrefecture: any;
 
   private uploadFile: any = null;
@@ -48,6 +49,10 @@ export default class PrefectureNamePage extends Vue {
 
   get prefectureRomaName(): string {
     return this.$route.params.prefectureName;
+  }
+
+  get currentPrefectureGoneState(): boolean {
+    return this.japan[this.prefectureRomaName].gone
   }
 
   get prefectureKanaName(): string {
