@@ -20,30 +20,27 @@ export const actions: ActionTree<JapanState, RootState> = {
         const uid = context.rootGetters.user.uid
         return context.bindFirestoreRef('japan', db.collection('japan').doc(uid))
     }),
-    initializeJapan: firebaseAction(context => {
+    initializeJapan: firebaseAction(async context => {
         const uid = context.rootGetters.user.uid
         const japanCollectionRef = japanCollection.doc(uid)
-        japanCollectionRef
-            .get()
-            .then(querySnapShot => {
-                const snapShot = Object.assign({}, querySnapShot.data())
-                prefectures.forEach(prefecture => {
-                    if (!snapShot[prefecture.name]) {
-                        snapShot[prefecture.name] = {
-                            gone: false,
-                            photoPaths: []
-                        }
-                    }
-                })
-                return japanCollectionRef.update(snapShot)
-            })
+        const snapShot = await japanCollectionRef.get()
+        const snapShotCopy: any = { ...snapShot.data() }
+        prefectures.forEach(prefecture => {
+            if (!snapShotCopy[prefecture.name]) {
+                snapShotCopy[prefecture.name] = {
+                    gone: false,
+                    photoPaths: []
+                }
+            }
+        })
+        return japanCollectionRef.update(snapShotCopy)
     }),
     sendGonePrefecture: firebaseAction(async (context, { prefectureName }) => {
         const uid = context.rootGetters.user.uid
         const japanCollectionRef = japanCollection.doc(uid)
         const snapShot = await japanCollectionRef.get()
-        const prefecturesSnapShot:any = { ...snapShot.data() }
-        const targetPrefecture = prefecturesSnapShot[prefectureName]
+        const snapShotCopy: any = { ...snapShot.data() }
+        const targetPrefecture = snapShotCopy[prefectureName]
         targetPrefecture.gone = true
         return japanCollectionRef.update({ [prefectureName]: targetPrefecture })
     })
