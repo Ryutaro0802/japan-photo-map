@@ -1,13 +1,19 @@
+import uniq from '~/plugins/uniq'
+
 export default async function fileUpload({ storageRef, uploadFile, metaObject }) {
     try {
         await storageRef.put(uploadFile)
-        const metadata = {
-            customMetadata: metaObject
+        const addMetadata = {
+            customMetadata: {
+                id: uniq(),
+                ...metaObject
+            }
         };
-        await storageRef.updateMetadata(metadata)
+        await storageRef.updateMetadata(addMetadata)
         const url = await storageRef.getDownloadURL()
+        const metaData = await storageRef.getMetadata()
         return {
-            id: storageRef.meta,
+            id: metaData.customMetadata.id,
             url,
         }
     } catch (error) {

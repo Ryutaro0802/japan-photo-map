@@ -26,6 +26,7 @@ import ColumnItem from "~/components/column/ColumnItem.vue";
 import InputFile from "~/components/button/InputFile.vue";
 import firebase from "~/plugins/firebase";
 import { Photo } from "~/types";
+import fileUpload from "~/plugins/fileUpload";
 
 const storage = firebase.storage();
 
@@ -70,20 +71,16 @@ export default class PrefectureNamePage extends Vue {
   async fileSubmit() {
     const prefectureName = this.prefectureRomaName;
     const uid = this.user.uid;
-    const storageRef = storage
+    const storageRef: any = storage
       .ref(`${uid}/images/${prefectureName}/`)
       .child(this.fileName);
     try {
-      await storageRef.put(this.uploadFile);
-      const metadata = {
-        customMetadata: {
-          prefectureName: prefectureName
-        }
-      };
-      await storageRef.updateMetadata(metadata);
-      const url = await storageRef.getDownloadURL();
-      const photo: Photo = { id: "aa", url };
-      this.addPhoto({ prefectureName, photo });
+      const uploadedPhotoInfo = await fileUpload({
+        storageRef,
+        uploadFile: this.uploadFile,
+        metaObject: {}
+      });
+      this.addPhoto({ prefectureName, photo: uploadedPhotoInfo });
     } catch (error) {
       console.error(error);
     }
