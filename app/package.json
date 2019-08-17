@@ -9,6 +9,7 @@
     "nuxt": "2.8.1",
     "nuxt-property-decorator": "2.3.0",
     "ts-node": "8.3.0",
+    "uuid": "^3.3.2",
     "vuex-class": "0.3.2",
     "vuexfire": "^3.1.2"
   },
@@ -22,6 +23,7 @@
   "devDependencies": {
     "@nuxt/typescript": "2.8.1",
     "@types/node": "10.14.13",
+    "@types/uuid": "^3.4.5",
     "@types/webpack-env": "1.14.0"
   }
 }

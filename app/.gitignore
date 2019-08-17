@@ -12,3 +12,6 @@ dist
 
 # firebase
 .firebase
+
+# yarn
+yarn-error.log
