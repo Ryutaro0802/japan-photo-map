@@ -82,6 +82,7 @@ export default class PrefectureNamePage extends Vue {
         metaObject: {}
       });
       this.addPhoto({ prefectureName, photo: uploadedPhotoInfo });
+      // this.gonePrefecture();
     } catch (error) {
       console.error(error);
     }
