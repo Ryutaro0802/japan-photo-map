@@ -1,5 +1,5 @@
 import { JapanState, RootState } from "~/types"
-import { ActionTree, GetterTree } from "vuex"
+import { MutationTree, ActionTree, GetterTree } from "vuex"
 import firebase from '~/plugins/firebase'
 import { firestoreAction, firebaseAction } from 'vuexfire'
 import prefectures from '~/static/prefectures.json'
@@ -8,11 +8,19 @@ const db = firebase.firestore()
 const japanCollection = db.collection('japan')
 
 export const state = (): JapanState => ({
-    japan: null
+    japan: null,
+    initialized: false
 })
 
 export const getters: GetterTree<JapanState, RootState> = {
-    japan: state => state.japan
+    japan: state => state.japan,
+    initialized: state => state.initialized
+}
+
+export const mutations: MutationTree<JapanState> = {
+    setInitialized(state: JapanState): void {
+        state.initialized = true
+    }
 }
 
 export const actions: ActionTree<JapanState, RootState> = {
@@ -33,6 +41,7 @@ export const actions: ActionTree<JapanState, RootState> = {
                 }
             }
         })
+        context.commit('setInitialized')
         return japanCollectionRef.update(snapShotCopy)
     }),
     sendGonePrefecture: firebaseAction(async (context, { prefectureName }) => {

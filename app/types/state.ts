@@ -10,5 +10,6 @@ export interface IndexState {
 }
 
 export interface JapanState {
-  japan: Japan | null
+  japan: Japan | null,
+  initialized: boolean
 }

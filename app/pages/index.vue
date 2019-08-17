@@ -21,6 +21,7 @@ import { Japan } from "~/types";
 export default class IndexPage extends Vue {
   @Getter("loggedIn") loggedIn!: boolean;
   @Getter("japan/japan") japan!: Japan | null;
+  @Getter("japan/initialized") mapInitialized!: boolean;
   @Mutation("setUser") setUser: any;
   @Mutation("setLoaded") setLoaded: any;
   @Action("callAuth") callAuth: any;
@@ -36,8 +37,10 @@ export default class IndexPage extends Vue {
       this.setUser({ user });
       return;
     }
-    await this.bindJapanRef();
-    await this.initializeJapan();
+    if (!this.mapInitialized) {
+      await this.bindJapanRef();
+      await this.initializeJapan();
+    }
     this.setLoaded({ loaded: true });
   }
 }
