@@ -1,6 +1,11 @@
 export * from './state';
 import './prefectureNameTranslator'
 
+export interface Photo {
+  id: string
+  url: string
+}
+
 export interface Prefecture {
   gone: boolean,
   photos: string[]

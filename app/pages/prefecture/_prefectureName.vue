@@ -25,6 +25,7 @@ import Column from "~/components/column/Column.vue";
 import ColumnItem from "~/components/column/ColumnItem.vue";
 import InputFile from "~/components/button/InputFile.vue";
 import firebase from "~/plugins/firebase";
+import { Photo } from "~/types";
 
 const storage = firebase.storage();
 
@@ -36,9 +37,10 @@ const storage = firebase.storage();
   }
 })
 export default class PrefectureNamePage extends Vue {
-  @Getter('user') user: any;
-  @Getter('japan/japan') japan: any;
-  @Action('japan/sendGonePrefecture') sendGonePrefecture: any;
+  @Getter("user") user: any;
+  @Getter("japan/japan") japan: any;
+  @Action("japan/sendGonePrefecture") sendGonePrefecture: any;
+  @Action("japan/addPhoto") addPhoto: any;
 
   private uploadFile: any = null;
   private fileName: string = "";
@@ -52,11 +54,11 @@ export default class PrefectureNamePage extends Vue {
   }
 
   get prefectureGoneState(): boolean {
-    return this.japan[this.prefectureRomaName].gone
+    return this.japan[this.prefectureRomaName].gone;
   }
 
   get prefectureKanaName(): string {
-    return `${this.$prefectureNameTranslator(this.prefectureRomaName)}県`
+    return `${this.$prefectureNameTranslator(this.prefectureRomaName)}県`;
   }
 
   setImage(e: any) {
@@ -66,7 +68,7 @@ export default class PrefectureNamePage extends Vue {
   }
 
   async fileSubmit() {
-    const prefectureName = this.$route.params.prefectureName;
+    const prefectureName = this.prefectureRomaName;
     const uid = this.user.uid;
     const storageRef = storage
       .ref(`${uid}/images/${prefectureName}/`)
@@ -80,7 +82,8 @@ export default class PrefectureNamePage extends Vue {
       };
       await storageRef.updateMetadata(metadata);
       const url = await storageRef.getDownloadURL();
-      console.log(url);
+      const photo: Photo = { id: "aa", url };
+      this.addPhoto({ prefectureName, photo });
     } catch (error) {
       console.error(error);
     }

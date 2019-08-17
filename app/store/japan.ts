@@ -8,11 +8,11 @@ const db = firebase.firestore()
 const japanCollection = db.collection('japan')
 const collectionUtility = async (rootGetters: any) => {
     const uid = rootGetters.user.uid
-    const japanCollectionRef = japanCollection.doc(uid)
-    const snapShot = await japanCollectionRef.get()
+    const ref = japanCollection.doc(uid)
+    const snapShot = await ref.get()
     return {
         snapShot: { ...snapShot.data() },
-        ref: japanCollectionRef
+        ref
     }
 }
 
@@ -38,34 +38,28 @@ export const actions: ActionTree<JapanState, RootState> = {
         return context.bindFirestoreRef('japan', db.collection('japan').doc(uid))
     }),
     initializeJapan: firebaseAction(async context => {
-        const uid = context.rootGetters.user.uid
-        const japanCollectionRef = japanCollection.doc(uid)
-        const snapShot = await japanCollectionRef.get()
-        const snapShotCopy: any = { ...snapShot.data() }
+        const utility: any = await collectionUtility(context.rootGetters)
         prefectures.forEach(prefecture => {
-            if (!snapShotCopy[prefecture.name]) {
-                snapShotCopy[prefecture.name] = {
+            if (!utility.snapShot[prefecture.name]) {
+                utility.snapShot[prefecture.name] = {
                     gone: false,
                     photos: []
                 }
             }
         })
         context.commit('setInitialized')
-        return japanCollectionRef.update(snapShotCopy)
+        return utility.ref.update(utility.snapShot)
     }),
     sendGonePrefecture: firebaseAction(async (context, { prefectureName }) => {
-        const uid = context.rootGetters.user.uid
-        const japanCollectionRef = japanCollection.doc(uid)
-        const snapShot = await japanCollectionRef.get()
-        const snapShotCopy: any = { ...snapShot.data() }
-        const targetPrefecture = snapShotCopy[prefectureName]
+        const utility: any = await collectionUtility(context.rootGetters)
+        const targetPrefecture = utility.snapShot[prefectureName]
         targetPrefecture.gone = true
-        return japanCollectionRef.update({ [prefectureName]: targetPrefecture })
+        return utility.ref.update({ [prefectureName]: targetPrefecture })
     }),
-    addPhotoPath: firebaseAction(async (context, { photoPath }) => {
-        const uid = context.rootGetters.user.uid
-        const japanCollectionRef = japanCollection.doc(uid)
-        const snapShot = await japanCollectionRef.get()
-        const snapShotCopy: any = { ...snapShot.data() }
+    addPhoto: firebaseAction(async (context, { prefectureName, photo }) => {
+        const utility: any = await collectionUtility(context.rootGetters)
+        const targetPrefecture = utility.snapShot[prefectureName]
+        targetPrefecture.photos.push(photo)
+        return utility.ref.update({ [prefectureName]: targetPrefecture })
     })
 }

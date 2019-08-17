@@ -1,20 +1,16 @@
-export default function fileUpload() {
-    const prefectureName = this.$route.params.prefectureName;
-    const uid = this.user.uid;
-    const storageRef = storage
-        .ref(`${uid}/images/${prefectureName}/`)
-        .child(this.fileName);
+export default async function fileUpload({ storageRef, uploadFile, metaObject }) {
     try {
-        await storageRef.put(this.uploadFile);
+        await storageRef.put(uploadFile)
         const metadata = {
-            customMetadata: {
-                prefectureName: prefectureName
-            }
+            customMetadata: metaObject
         };
-        await storageRef.updateMetadata(metadata);
-        const url = await storageRef.getDownloadURL();
-        console.log(url);
+        await storageRef.updateMetadata(metadata)
+        const url = await storageRef.getDownloadURL()
+        return {
+            id: storageRef.meta,
+            url,
+        }
     } catch (error) {
-        console.error(error);
+        console.error(error)
     }
 }
