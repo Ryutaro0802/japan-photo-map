@@ -1,5 +1,3 @@
-# READ.me
-
 ## firebase login
 
 firebase login --no-localhost
