@@ -17,7 +17,7 @@ export default {
   plugins: ['~/plugins/prefectureNameTranslator.ts'],
   build: {},
   modules: [
-    "@nuxtjs/axios",
+    '@nuxtjs/pwa',
   ],
   axios: {}
 }
