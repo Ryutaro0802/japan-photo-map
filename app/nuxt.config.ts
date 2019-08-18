@@ -19,5 +19,9 @@ export default {
   modules: [
     '@nuxtjs/pwa',
   ],
+  manifest: {
+    name: 'Japan Photo map',
+    lang: 'ja'
+  },
   axios: {}
 }
