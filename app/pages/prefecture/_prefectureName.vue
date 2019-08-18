@@ -40,7 +40,7 @@ export default class PrefectureNamePage extends Vue {
   @Action("japan/sendGonePrefecture") sendGonePrefecture: any;
   @Action("japan/addPhoto") addPhoto: any;
 
-  private uploadFile: any = null;
+  private uploadFile: Blob | Uint8Array | ArrayBuffer | null = null;
   private fileName: string = "";
 
   validate({ params }: { params: any }): boolean {
@@ -70,9 +70,10 @@ export default class PrefectureNamePage extends Vue {
   }
 
   async fileSubmit() {
+    if (!this.uploadFile) return;
     const prefectureName = this.prefectureRomaName;
     const uid = this.user.uid;
-    const storageRef: any = storage
+    const storageRef = storage
       .ref(`${uid}/images/${prefectureName}/`)
       .child(this.fileName);
     try {

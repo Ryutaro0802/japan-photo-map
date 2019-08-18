@@ -1,17 +1,23 @@
 import uniq from '~/plugins/uniq'
 
-export default async function fileUpload({ storageRef, uploadFile, metaObject }) {
+type uploadPhotoArgument = {
+    storageRef: firebase.storage.Reference,
+    uploadFile: Blob | Uint8Array | ArrayBuffer,
+    metaObject: object,
+}
+
+export default async function fileUpload(uploadPhoto: uploadPhotoArgument) {
     try {
-        await storageRef.put(uploadFile)
+        await uploadPhoto.storageRef.put(uploadPhoto.uploadFile)
         const addMetadata = {
             customMetadata: {
                 id: uniq(),
-                ...metaObject
+                ...uploadPhoto.metaObject
             }
         };
-        await storageRef.updateMetadata(addMetadata)
-        const url = await storageRef.getDownloadURL()
-        const metaData = await storageRef.getMetadata()
+        await uploadPhoto.storageRef.updateMetadata(addMetadata)
+        const url = await uploadPhoto.storageRef.getDownloadURL()
+        const metaData = await uploadPhoto.storageRef.getMetadata()
         return {
             id: metaData.customMetadata.id,
             url,
