@@ -60,6 +60,7 @@ export const actions: ActionTree<JapanState, RootState> = {
         const utility: any = await collectionUtility(context.rootGetters)
         const targetPrefecture = utility.snapShot[prefectureName]
         targetPrefecture.photos.push(photo)
-        return utility.ref.update({ [prefectureName]: targetPrefecture })
+        utility.ref.update({ [prefectureName]: targetPrefecture })
+        context.dispatch('sendGonePrefecture', { prefectureName })
     })
 }
