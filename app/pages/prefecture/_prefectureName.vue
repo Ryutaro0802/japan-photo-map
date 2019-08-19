@@ -11,12 +11,14 @@
 
     <form @submit.prevent="fileSubmit">
       <input type="file" @change="setImage" />
-      <!-- <InputFile @change="fileUpload" /> -->
       <button>Upload</button>
     </form>
-    <Column>
+    <Column class="photos">
       <ColumnItem v-for="photo in photos" :key="photo.id">
+      <div class="photo">
+        <input v-if="deleteMode" type="checkbox">
         <img :src="photo.url" alt />
+      </div>
       </ColumnItem>
     </Column>
   </section>
@@ -24,10 +26,9 @@
 
 <script lang="ts">
 import { Component, Vue } from "nuxt-property-decorator";
-import { State, Getter, Action, namespace } from "vuex-class";
+import { Getter, Action } from "vuex-class";
 import Column from "~/components/column/Column.vue";
 import ColumnItem from "~/components/column/ColumnItem.vue";
-import InputFile from "~/components/button/InputFile.vue";
 import firebase from "~/plugins/firebase";
 import { Photo } from "~/types";
 import fileUpload from "~/plugins/fileUpload";
@@ -37,8 +38,7 @@ const storage = firebase.storage();
 @Component({
   components: {
     Column,
-    ColumnItem,
-    InputFile
+    ColumnItem
   }
 })
 export default class PrefectureNamePage extends Vue {
@@ -130,5 +130,20 @@ export default class PrefectureNamePage extends Vue {
 <style scoped>
 .heading {
   color: white;
+}
+.photos {
+
+}
+.photo {
+  width: 200px;
+  position: relative;
+}
+.photo > img {
+  width: 100%;
+}
+.photo > input {
+  position: absolute;
+  right: 0;
+  top: 0;
 }
 </style>
