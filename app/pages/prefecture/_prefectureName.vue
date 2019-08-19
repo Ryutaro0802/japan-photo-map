@@ -1,8 +1,14 @@
 <template>
   <section>
     <h2 class="heading">{{ prefectureKanaName }}</h2>
-    <button v-if="!prefectureGoneState" type="button" @click="gonePrefecture">行った</button>
-    <button v-else type="button" @click="gonePrefecture">行った済</button>
+    <div>
+      <button v-if="!prefectureGoneState" type="button" @click="gonePrefecture">行った</button>
+      <button v-else type="button" @click="gonePrefecture">行った済</button>
+    </div>
+    <div>
+      <button type="button" @click="deleteModeStateChange">削除する</button>
+    </div>
+
     <form @submit.prevent="fileSubmit">
       <input type="file" @change="setImage" />
       <!-- <InputFile @change="fileUpload" /> -->
@@ -43,6 +49,7 @@ export default class PrefectureNamePage extends Vue {
 
   private uploadFile: Blob | Uint8Array | ArrayBuffer | null = null;
   private fileName: string = "";
+  private deleteMode: boolean = false;
 
   validate({ params }: { params: any }): boolean {
     return /^\w+$/.test(params.prefectureName);
@@ -67,13 +74,13 @@ export default class PrefectureNamePage extends Vue {
     return this.japan[this.prefectureRomaName].photos;
   }
 
-  setImage(e: any) {
+  private setImage(e: any) {
     const file = e.target.files;
     this.fileName = file[0].name;
     this.uploadFile = new Blob(file, { type: "image/jpeg" });
   }
 
-  async fileSubmit() {
+  private async fileSubmit() {
     if (!this.uploadFile) return;
     const prefectureName = this.prefectureRomaName;
     const uid = this.user.uid;
@@ -92,7 +99,15 @@ export default class PrefectureNamePage extends Vue {
     }
   }
 
-  gonePrefecture() {
+  private deleteModeStateChange() {
+    if (this.deleteMode) {
+      this.deleteMode = false;
+    } else {
+      this.deleteMode = true;
+    }
+  }
+
+  private gonePrefecture() {
     if (this.prefectureGoneState) {
       // 写真があったらreturn
       if (this.photos.length) {
