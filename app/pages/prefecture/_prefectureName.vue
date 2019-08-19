@@ -56,7 +56,7 @@ export default class PrefectureNamePage extends Vue {
   }
 
   get prefectureKanaName(): string {
-    return `${this.$prefectureNameTranslator(this.prefectureRomaName)}県`;
+    return `${this.$prefectureNameTranslator(this.prefectureRomaName).prefectureAddUnitName}`;
   }
 
   get photos(): { id: string; url: string }[] {
