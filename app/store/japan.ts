@@ -1,8 +1,17 @@
-import { JapanState, RootState } from "~/types"
+import { JapanState, RootState, Photo } from "~/types"
 import { MutationTree, ActionTree, GetterTree } from "vuex"
 import firebase from '~/plugins/firebase'
 import { firestoreAction, firebaseAction } from 'vuexfire'
 import prefectures from '~/static/prefectures.json'
+
+type sendGonePrefectureArgument = {
+    prefectureName: string,
+    goneState: boolean
+}
+type addPhotoArgument = {
+    prefectureName: string,
+    photo: Photo
+}
 
 const db = firebase.firestore()
 const japanCollection = db.collection('japan')
@@ -50,17 +59,20 @@ export const actions: ActionTree<JapanState, RootState> = {
         context.commit('setInitialized')
         return utility.ref.update(utility.snapShot)
     }),
-    sendGonePrefecture: firebaseAction(async (context, { prefectureName }) => {
+    sendGonePrefecture: firebaseAction(async (context, argument: sendGonePrefectureArgument) => {
         const utility: any = await collectionUtility(context.rootGetters)
-        const targetPrefecture = utility.snapShot[prefectureName]
-        targetPrefecture.gone = true
-        return utility.ref.update({ [prefectureName]: targetPrefecture })
+        const targetPrefecture = utility.snapShot[argument.prefectureName]
+        targetPrefecture.gone = argument.goneState
+        return utility.ref.update({ [argument.prefectureName]: targetPrefecture })
     }),
-    addPhoto: firebaseAction(async (context, { prefectureName, photo }) => {
+    addPhoto: firebaseAction(async (context, argument: addPhotoArgument) => {
         const utility: any = await collectionUtility(context.rootGetters)
-        const targetPrefecture = utility.snapShot[prefectureName]
-        targetPrefecture.photos.push(photo)
-        utility.ref.update({ [prefectureName]: targetPrefecture })
-        context.dispatch('sendGonePrefecture', { prefectureName })
+        const targetPrefecture = utility.snapShot[argument.prefectureName]
+        targetPrefecture.photos.push(argument.photo)
+        utility.ref.update({ [argument.prefectureName]: targetPrefecture })
+        context.dispatch('sendGonePrefecture', {
+            prefectureName: argument.prefectureName,
+            goneState: true
+        })
     })
 }

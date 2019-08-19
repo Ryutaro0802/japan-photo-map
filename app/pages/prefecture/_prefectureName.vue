@@ -1,7 +1,8 @@
 <template>
   <section>
     <h2 class="heading">{{ prefectureKanaName }}</h2>
-    <button @click.prevent="gonePrefecture" :disabled="prefectureGoneState">行った</button>
+    <button v-if="!prefectureGoneState" type="button" @click="gonePrefecture">行った</button>
+    <button v-else type="button" @click="gonePrefecture">行った済</button>
     <form @submit.prevent="fileSubmit">
       <input type="file" @change="setImage" />
       <!-- <InputFile @change="fileUpload" /> -->
@@ -56,7 +57,10 @@ export default class PrefectureNamePage extends Vue {
   }
 
   get prefectureKanaName(): string {
-    return `${this.$prefectureNameTranslator(this.prefectureRomaName).prefectureAddUnitName}`;
+    return `${
+      this.$prefectureNameTranslator(this.prefectureRomaName)
+        .prefectureAddUnitName
+    }`;
   }
 
   get photos(): { id: string; url: string }[] {
@@ -89,7 +93,21 @@ export default class PrefectureNamePage extends Vue {
   }
 
   gonePrefecture() {
-    this.sendGonePrefecture({ prefectureName: this.prefectureRomaName });
+    if (this.prefectureGoneState) {
+      // 写真があったらreturn
+      if (this.photos.length) {
+        return;
+      }
+      this.sendGonePrefecture({
+        prefectureName: this.prefectureRomaName,
+        goneState: false
+      });
+    } else {
+      this.sendGonePrefecture({
+        prefectureName: this.prefectureRomaName,
+        goneState: true
+      });
+    }
   }
 }
 </script>
