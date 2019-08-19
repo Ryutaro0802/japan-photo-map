@@ -13,7 +13,7 @@
       <input type="file" @change="setImage" />
       <button>Upload</button>
     </form>
-    <Column class="photos">
+    <Column v-if="photos.length" class="photos">
       <ColumnItem v-for="photo in photos" :key="photo.id">
       <div class="photo">
         <input v-if="deleteMode" type="checkbox">
@@ -21,6 +21,9 @@
       </div>
       </ColumnItem>
     </Column>
+    <p v-else>
+      No Photos
+    </p>
   </section>
 </template>
 
@@ -30,7 +33,7 @@ import { Getter, Action } from "vuex-class";
 import Column from "~/components/column/Column.vue";
 import ColumnItem from "~/components/column/ColumnItem.vue";
 import firebase from "~/plugins/firebase";
-import { Photo } from "~/types";
+import { Photo, Japan } from "~/types";
 import fileUpload from "~/plugins/fileUpload";
 
 const storage = firebase.storage();
@@ -42,8 +45,8 @@ const storage = firebase.storage();
   }
 })
 export default class PrefectureNamePage extends Vue {
-  @Getter("user") user: any;
-  @Getter("japan/japan") japan: any;
+  @Getter("user") user!: any;
+  @Getter("japan/japan") japan!: any;
   @Action("japan/sendGonePrefecture") sendGonePrefecture: any;
   @Action("japan/addPhoto") addPhoto: any;
 
