@@ -13,17 +13,19 @@
       <input type="file" @change="setImage" />
       <button>Upload</button>
     </form>
+
     <Column v-if="photos.length" class="photos">
       <ColumnItem v-for="photo in photos" :key="photo.id">
-      <div class="photo">
-        <input v-if="deleteMode" type="checkbox">
-        <img :src="photo.url" alt />
-      </div>
+        <div class="photo">
+          <input v-if="deleteMode" v-model="checkedPhotos" type="checkbox" :value="photo.id" />
+          <img :src="photo.url" alt />
+        </div>
       </ColumnItem>
     </Column>
-    <p v-else>
-      No Photos
-    </p>
+
+    <p v-else>No Photos</p>
+
+    <button v-if="deleteMode" type="button" @click="onDelete">OK</button>
   </section>
 </template>
 
@@ -49,10 +51,12 @@ export default class PrefectureNamePage extends Vue {
   @Getter("japan/japan") japan!: any;
   @Action("japan/sendGonePrefecture") sendGonePrefecture: any;
   @Action("japan/addPhoto") addPhoto: any;
+  @Action("japan/deletePhoto") deletePhoto: any;
 
   private uploadFile: Blob | Uint8Array | ArrayBuffer | null = null;
   private fileName: string = "";
   private deleteMode: boolean = false;
+  private checkedPhotos: string[] = [];
 
   validate({ params }: { params: any }): boolean {
     return /^\w+$/.test(params.prefectureName);
@@ -84,7 +88,9 @@ export default class PrefectureNamePage extends Vue {
   }
 
   private async fileSubmit() {
-    if (!this.uploadFile) return;
+    if (!this.uploadFile) {
+      return;
+    }
     const prefectureName = this.prefectureRomaName;
     const uid = this.user.uid;
     const storageRef = storage
@@ -102,7 +108,17 @@ export default class PrefectureNamePage extends Vue {
     }
   }
 
+  private async onDelete() {
+    const prefectureName = this.prefectureRomaName;
+    await this.deletePhoto({ prefectureName, photoIds: this.checkedPhotos });
+    this.deleteMode = false;
+  }
+
   private deleteModeStateChange() {
+    // 写真が一枚もなかったら削除モードにしない
+    if (!this.photos.length) {
+      return;
+    }
     if (this.deleteMode) {
       this.deleteMode = false;
     } else {
@@ -133,9 +149,6 @@ export default class PrefectureNamePage extends Vue {
 <style scoped>
 .heading {
   color: white;
-}
-.photos {
-
 }
 .photo {
   width: 200px;
