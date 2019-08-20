@@ -1,29 +1,41 @@
 <template>
   <section>
     <h2 class="heading">{{ prefectureKanaName }}</h2>
-    <button v-if="!prefectureGoneState" type="button" @click="gonePrefecture">行った</button>
-    <button v-else type="button" @click="gonePrefecture">行った済</button>
+    <div>
+      <button v-if="!prefectureGoneState" type="button" @click="gonePrefecture">行った</button>
+      <button v-else type="button" @click="gonePrefecture">行った済</button>
+    </div>
+    <div>
+      <button type="button" @click="deleteModeStateChange">削除する</button>
+    </div>
+
     <form @submit.prevent="fileSubmit">
       <input type="file" @change="setImage" />
-      <!-- <InputFile @change="fileUpload" /> -->
       <button>Upload</button>
     </form>
-    <Column>
+
+    <Column v-if="photos.length" class="photos">
       <ColumnItem v-for="photo in photos" :key="photo.id">
-        <img :src="photo.url" alt />
+        <div class="photo">
+          <input v-if="deleteMode" v-model="checkedPhotos" type="checkbox" :value="photo.id" />
+          <img :src="photo.url" alt />
+        </div>
       </ColumnItem>
     </Column>
+
+    <p v-else>No Photos</p>
+
+    <button v-if="deleteMode" type="button" @click="onDelete">OK</button>
   </section>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from "nuxt-property-decorator";
-import { State, Getter, Action, namespace } from "vuex-class";
+import { Getter, Action } from "vuex-class";
 import Column from "~/components/column/Column.vue";
 import ColumnItem from "~/components/column/ColumnItem.vue";
-import InputFile from "~/components/button/InputFile.vue";
 import firebase from "~/plugins/firebase";
-import { Photo } from "~/types";
+import { Photo, Japan } from "~/types";
 import fileUpload from "~/plugins/fileUpload";
 
 const storage = firebase.storage();
@@ -31,18 +43,20 @@ const storage = firebase.storage();
 @Component({
   components: {
     Column,
-    ColumnItem,
-    InputFile
+    ColumnItem
   }
 })
 export default class PrefectureNamePage extends Vue {
-  @Getter("user") user: any;
-  @Getter("japan/japan") japan: any;
+  @Getter("user") user!: any;
+  @Getter("japan/japan") japan!: any;
   @Action("japan/sendGonePrefecture") sendGonePrefecture: any;
   @Action("japan/addPhoto") addPhoto: any;
+  @Action("japan/deletePhoto") deletePhoto: any;
 
   private uploadFile: Blob | Uint8Array | ArrayBuffer | null = null;
   private fileName: string = "";
+  private deleteMode: boolean = false;
+  private checkedPhotos: string[] = [];
 
   validate({ params }: { params: any }): boolean {
     return /^\w+$/.test(params.prefectureName);
@@ -67,14 +81,16 @@ export default class PrefectureNamePage extends Vue {
     return this.japan[this.prefectureRomaName].photos;
   }
 
-  setImage(e: any) {
+  private setImage(e: any) {
     const file = e.target.files;
     this.fileName = file[0].name;
     this.uploadFile = new Blob(file, { type: "image/jpeg" });
   }
 
-  async fileSubmit() {
-    if (!this.uploadFile) return;
+  private async fileSubmit() {
+    if (!this.uploadFile) {
+      return;
+    }
     const prefectureName = this.prefectureRomaName;
     const uid = this.user.uid;
     const storageRef = storage
@@ -92,7 +108,25 @@ export default class PrefectureNamePage extends Vue {
     }
   }
 
-  gonePrefecture() {
+  private async onDelete() {
+    const prefectureName = this.prefectureRomaName;
+    await this.deletePhoto({ prefectureName, photoIds: this.checkedPhotos });
+    this.deleteMode = false;
+  }
+
+  private deleteModeStateChange() {
+    // 写真が一枚もなかったら削除モードにしない
+    if (!this.photos.length) {
+      return;
+    }
+    if (this.deleteMode) {
+      this.deleteMode = false;
+    } else {
+      this.deleteMode = true;
+    }
+  }
+
+  private gonePrefecture() {
     if (this.prefectureGoneState) {
       // 写真があったらreturn
       if (this.photos.length) {
@@ -115,5 +149,17 @@ export default class PrefectureNamePage extends Vue {
 <style scoped>
 .heading {
   color: white;
+}
+.photo {
+  width: 200px;
+  position: relative;
+}
+.photo > img {
+  width: 100%;
+}
+.photo > input {
+  position: absolute;
+  right: 0;
+  top: 0;
 }
 </style>

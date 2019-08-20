@@ -12,6 +12,10 @@ type addPhotoArgument = {
     prefectureName: string,
     photo: Photo
 }
+type deletePhotoArgument = {
+    prefectureName: string,
+    photoIds: string[]
+}
 
 const db = firebase.firestore()
 const japanCollection = db.collection('japan')
@@ -74,5 +78,11 @@ export const actions: ActionTree<JapanState, RootState> = {
             prefectureName: argument.prefectureName,
             goneState: true
         })
+    }),
+    deletePhoto: firebaseAction(async (context, argument: deletePhotoArgument) => {
+        const utility: any = await collectionUtility(context.rootGetters)
+        const targetPrefecture = utility.snapShot[argument.prefectureName]
+        targetPrefecture.photos = targetPrefecture.photos.filter((photo: Photo) => !argument.photoIds.includes(photo.id))
+        utility.ref.update({ [argument.prefectureName]: targetPrefecture })
     })
 }
