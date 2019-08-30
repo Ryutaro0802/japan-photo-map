@@ -3,7 +3,7 @@
     <svg
       xmlns="http://www.w3.org/2000/svg"
       xmlns:xlink="http://www.w3.org/1999/xlink"
-      viewBox="0 0 4364.13 6172.106"
+      viewBox="1000 0 2900 6172.106"
     >
       <title>A Blank Map of Japan</title>
 
@@ -30,14 +30,28 @@
            transform="matrix( 156.3775, 0, 0, -193.6681,
                              -19002.869, 8981.693 )" />
       -->
-      <Prefecture
-        v-for="prefecture in prefectures"
-        :key="prefecture.name"
-        :id="prefecture.name"
-        :gone="japan[prefecture.name].gone"
-        @onPrefectureClick="onPrefectureClick"
-        :d="prefecture.d"
-      />
+      <template v-for="prefecture in prefectures">
+        <template v-if="prefecture.name === 'okinawa'">
+          <svg :key="prefecture.name" x="300" y="-500">
+            <Prefecture
+              :key="prefecture.name"
+              :id="prefecture.name"
+              :gone="japan[prefecture.name].gone"
+              @onPrefectureClick="onPrefectureClick"
+              :d="prefecture.d"
+            />
+          </svg>
+        </template>
+        <Prefecture
+          v-else
+          :key="prefecture.name"
+          :id="prefecture.name"
+          :gone="japan[prefecture.name].gone"
+          @onPrefectureClick="onPrefectureClick"
+          :d="prefecture.d"
+        />
+      </template>
+
     </svg>
   </div>
 </template>
