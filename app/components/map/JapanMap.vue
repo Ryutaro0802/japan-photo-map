@@ -1,9 +1,10 @@
 <template>
-  <div>
+  <div class="map-wrapper">
     <svg
       xmlns="http://www.w3.org/2000/svg"
       xmlns:xlink="http://www.w3.org/1999/xlink"
       viewBox="1000 0 2900 6172.106"
+      class="map-root"
     >
       <title>A Blank Map of Japan</title>
 
@@ -51,7 +52,6 @@
           :d="prefecture.d"
         />
       </template>
-
     </svg>
   </div>
 </template>
@@ -79,3 +79,11 @@ export default class JapanMap extends Vue {
 }
 </script>
 
+<style>
+.map-wrapper {
+  text-align: center;
+}
+.map-root  {
+  max-width: 800px;
+}
+</style>
