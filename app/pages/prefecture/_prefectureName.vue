@@ -5,7 +5,7 @@
       <button v-if="!prefectureGoneState" type="button" @click="gonePrefecture">行った</button>
       <button v-else type="button" @click="gonePrefecture">行った済</button>
     </div>
-    <div>
+    <div v-if="photos.length">
       <button type="button" @click="deleteModeStateChange">削除する</button>
     </div>
 
