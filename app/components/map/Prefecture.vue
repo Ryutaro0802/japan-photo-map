@@ -34,3 +34,9 @@ export default class Prefecture extends Vue {
   }
 }
 </script>
+
+<style>
+  path {
+    cursor: pointer;
+  }
+</style>
