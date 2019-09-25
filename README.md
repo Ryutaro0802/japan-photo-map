@@ -1,3 +1,7 @@
+# Japan Photo Map
+
+https://japanphotomap.firebaseapp.com/login
+
 ## firebase login
 
 firebase login --no-localhost
