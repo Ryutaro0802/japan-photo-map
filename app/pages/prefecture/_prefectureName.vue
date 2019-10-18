@@ -2,16 +2,18 @@
   <section>
     <h2 class="heading">{{ prefectureKanaName }}</h2>
     <div>
-      <button v-if="!prefectureGoneState" type="button" @click="gonePrefecture">行った</button>
-      <button v-else type="button" @click="gonePrefecture">行った済</button>
+      <Button v-if="!prefectureGoneState" type="button" @click="gonePrefecture">行った</Button>
+      <Button v-else type="button" @click="gonePrefecture">行った済</Button>
     </div>
     <div v-if="photos.length">
-      <button type="button" @click="deleteModeStateChange">削除する</button>
+      <Button type="button" @click="deleteModeStateChange">削除する</Button>
     </div>
 
     <form @submit.prevent="fileSubmit">
       <input type="file" @change="setImage" />
-      <button>Upload</button>
+      <Button>
+        Upload
+      </Button>
     </form>
 
     <Column v-if="photos.length" class="photos">
@@ -34,6 +36,7 @@ import { Component, Vue } from "nuxt-property-decorator";
 import { Getter, Action } from "vuex-class";
 import Column from "~/components/column/Column.vue";
 import ColumnItem from "~/components/column/ColumnItem.vue";
+import Button from "~/components/button/Button.vue";
 import firebase from "~/plugins/firebase";
 import { Photo, Japan } from "~/types";
 import fileUpload from "~/plugins/fileUpload";
@@ -43,7 +46,8 @@ const storage = firebase.storage();
 @Component({
   components: {
     Column,
-    ColumnItem
+    ColumnItem,
+    Button
   }
 })
 export default class PrefectureNamePage extends Vue {
@@ -127,6 +131,7 @@ export default class PrefectureNamePage extends Vue {
   }
 
   private gonePrefecture() {
+    console.log('asdf')
     if (this.prefectureGoneState) {
       // 写真があったらreturn
       if (this.photos.length) {

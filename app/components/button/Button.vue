@@ -1,5 +1,5 @@
 <template>
-  <component class="button" :is="tagName">
+  <component class="button" :is="tagName" @click="$emit('click', $event)">
     <slot />
   </component>
 </template>
@@ -20,7 +20,7 @@ export default class Button extends Vue {
 
 <style scoped>
 .button {
-  background-color: #eee;
+  background-color: #325994;
   white-space: nowrap;
   padding: calc(.375em - 1px) .75em;
   border-radius: 3px;
