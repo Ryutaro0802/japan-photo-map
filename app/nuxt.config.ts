@@ -23,5 +23,10 @@ export default {
     name: 'Japan Photo map',
     lang: 'ja'
   },
-  axios: {}
+  axios: {},
+  buildModules: ['@nuxt/typescript-build'],
+  typescript: {
+    typeCheck: true,
+    ignoreNotFoundWarnings: true
+  }
 }
