@@ -1,7 +1,7 @@
 version: '3'
 services:
   app:
-    image: node:10.16
+    image: node:12.15
     container_name: JapanPhotoApp
     environment:
       PORT: 3000
