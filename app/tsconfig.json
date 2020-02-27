@@ -20,7 +20,7 @@
       "~/*": ["./*"]
     },
     "types": [
-      "@nuxt/vue-app",
+      "@nuxt/types",
       "@types/node",
       "@types/webpack-env"
     ]
