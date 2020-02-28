@@ -12,6 +12,7 @@
     "experimentalDecorators": true,
     "sourceMap": true,
     "strict": true,
+    "strictFunctionTypes": false,
     "allowSyntheticDefaultImports": true,
     "noEmit": true,
     "baseUrl": ".",
