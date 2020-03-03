@@ -1,6 +1,6 @@
 <template>
   <section>
-    <div v-if="loggedIn && japan !== null">
+    <div v-if="loggedIn && mapInitialized">
       <JapanMap :japan="japan" />
     </div>
   </section>
@@ -26,7 +26,7 @@ export default class IndexPage extends Vue {
   @Mutation("setLoaded") setLoaded: any;
   @Action("callAuth") callAuth: any;
   @Action("signOut") signOut: any;
-  @Action("japan/bindJapanRef") bindJapanRef: any;
+  @Action("japan/bindJapanRef") bindJapanRef!: () => Promise<void>;
   @Action("japan/initializeJapan") initializeJapan: any;
 
   async created() {
