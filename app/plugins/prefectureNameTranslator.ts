@@ -182,8 +182,8 @@ export const prefectureNameTranslator = (name: string): object | undefined => {
             }
         case 'kagawa':
             return {
-                prefectureName: '神奈川',
-                prefectureAddUnitName: '神奈川県'
+                prefectureName: '香川',
+                prefectureAddUnitName: '香川県'
             }
         case 'ehime':
             return {
